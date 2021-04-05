@@ -1,0 +1,26 @@
+openapi: 3.0.0
+
+info:
+  title: "TODOer API"
+  version: "0.0.1"
+  contact:
+    name: Robert Witt
+    url: https://github.com/robertwitt/TODOer
+
+servers:
+  - url: /beta
+
+paths:
+  /ping:
+    get:
+      operationId: ping
+      x-eov-operation-handler: ping
+      summary: Ping!
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong

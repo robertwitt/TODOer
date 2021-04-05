@@ -36,6 +36,7 @@
     "typescript-eslint-parser": "^22.0.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-openapi-validator": "^4.12.7"
   }
 }
