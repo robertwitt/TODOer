@@ -7,7 +7,7 @@
     "clean": "rimraf ./dist",
     "dev": "node dist/app.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "test": "test",
+    "test": "jest",
     "tsc": "tsc"
   },
   "repository": {
@@ -21,7 +21,13 @@
   },
   "homepage": "https://github.com/robertwitt/TODOer#readme",
   "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/jest": "^26.0.22",
     "@types/node": "^14.14.37",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
