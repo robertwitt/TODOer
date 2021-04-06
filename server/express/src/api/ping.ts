@@ -6,5 +6,10 @@ import { Request, Response } from "express";
  * @param res the response
  */
 export function ping(_req: Request, res: Response): void {
-  res.status(200).send("pong");
+  res.json({
+    name: "TODOer API",
+    description: "RESTful API for the TODOer app",
+    version: "beta",
+    uptime: process.uptime(),
+  });
 }
