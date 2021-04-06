@@ -14,7 +14,6 @@ paths:
   /ping:
     get:
       operationId: ping
-      x-eov-operation-handler: ping
       summary: Ping!
       responses:
         "200":
@@ -23,6 +22,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServerInfo"
+  /Tasks/{id}:
+    get:
+      operationId: getTask
+      summary: Get a task by key
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerInfo"
+        "404":
+          description: Not Found
 
 components:
   schemas:
@@ -37,3 +56,64 @@ components:
           type: string
         uptime:
           type: number
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 40
+        collection:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            title:
+              type: string
+              maxLength: 40
+          required:
+            - id
+        dueDate:
+          type: string
+          format: date
+        dueTime:
+          type: string
+          maxLength: 8
+        status:
+          type: object
+          properties:
+            code:
+              type: string
+              maxLength: 1
+            name:
+              type: string
+              maxLength: 40
+          required:
+            - code
+        isUpdatable:
+          type: boolean
+        isDeletable:
+          type: boolean
+        priority:
+          type: object
+          properties:
+            code:
+              type: string
+              maxLength: 1
+            name:
+              type: string
+              maxLength: 40
+          required:
+            - code
+        isPlannedForMyDay:
+          type: boolean
+      required:
+        - id
+        - collection
+        - status
+        - isUpdatable
+        - isDeletable
+        - isPlannedForMyDay
