@@ -1,8 +1,8 @@
-import * as apiHandlers from "./api";
-import YAML from "yamljs";
-import { connector } from "swagger-routes-express";
 import express, { Application } from "express";
+import YAML from "yamljs";
 import path from "path";
+import { connector } from "swagger-routes-express";
+import * as apiHandlers from "./api";
 import { handleError } from "./middleware/error";
 
 /**
