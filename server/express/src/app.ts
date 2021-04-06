@@ -1,29 +1,25 @@
-import * as apiHandlers from "./api";
+import express from "express";
 import YAML from "yamljs";
-import { connector } from "swagger-routes-express";
-import express, { Application } from "express";
 import path from "path";
+import { connector } from "swagger-routes-express";
+import * as apiHandlers from "./api";
 import { handleError } from "./middleware/error";
 
-/**
- * Create the express app for this project.
- * @returns express app
- */
-export function createApp(): Application {
-  const app = express();
+const app = express();
 
-  // Setup body parsers
-  app.use(express.json());
-  app.use(express.text());
-  app.use(express.urlencoded({ extended: false }));
+app.set("port", process.env.PORT || 3000);
 
-  // Connect API and app
-  const apiDefinition = YAML.load(path.join("resources", "api.yaml"));
-  const connect = connector(apiHandlers, apiDefinition);
-  connect(app);
+// Setup body parsers
+app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded({ extended: false }));
 
-  // Add error handler
-  app.use(handleError);
+// Connect API and app
+const apiDefinition = YAML.load(path.join("resources", "api.yaml"));
+const connect = connector(apiHandlers, apiDefinition);
+connect(app);
 
-  return app;
-}
+// Add error handler
+app.use(handleError);
+
+export default app;
