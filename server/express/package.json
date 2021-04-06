@@ -45,7 +45,7 @@
     "clean": "rimraf ./dist",
     "dev": "ts-node-dev --respawn --transpile-only --no-notify ./src/server.ts",
     "start": "npm run build && node ./dist/src/server.js",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint": "eslint \"**/*.{js,ts}\" --quiet --fix",
     "test": "jest",
     "tsc": "tsc"
   }
