@@ -1,3 +1,5 @@
+import { DateSpecification, TimeSpecification } from "../specification/date";
+import { StringLengthSpecification } from "../specification/string";
 import { TaskListRef } from "./taskList";
 import TaskPriority from "./taskPriority";
 import TaskStatus from "./taskStatus";
@@ -26,25 +28,31 @@ type TaskData = {
   isPlannedForMyDay?: TaskIsPlannedForMyDay;
 };
 
+/**
+ * Implementation of the Task model entity
+ */
 export default class Task {
   private readonly _id: TaskId;
   private _title?: TaskTitle;
-  private _collection!: TaskListRef;
+  private _collection: TaskListRef;
   private _dueDate?: TaskDueDate;
   private _dueTime?: TaskDueTime;
   private readonly _status: TaskStatus;
   private _priority?: TaskPriority;
-  private _isPlannedForMyDay!: TaskIsPlannedForMyDay;
+  private _isPlannedForMyDay: TaskIsPlannedForMyDay;
 
   constructor(id: TaskId, data: TaskData) {
     this._id = id;
-    this.title = data.title;
-    this.collection = data.collection;
-    this.dueDate = data.dueDate;
-    this.dueTime = data.dueTime;
+    this.validateTitle(data.title);
+    this._title = data.title;
+    this._collection = data.collection;
+    this.validateDueDate(data.dueDate);
+    this._dueDate = data.dueDate;
+    this.validateDueTime(data.dueTime);
+    this._dueTime = data.dueTime;
     this._status = data.status;
-    this.priority = data.priority;
-    this.isPlannedForMyDay = data.isPlannedForMyDay ?? false;
+    this._priority = data.priority;
+    this._isPlannedForMyDay = data.isPlannedForMyDay ?? false;
   }
 
   get id(): TaskId {
@@ -56,14 +64,27 @@ export default class Task {
   }
 
   set title(value: TaskTitle | undefined) {
-    // TODO Add validation
+    if (!this.isUpdatable) {
+      return;
+    }
+    this.validateTitle(value);
     this._title = value;
+  }
+
+  private validateTitle(value: TaskTitle | undefined) {
+    if (value) {
+      new StringLengthSpecification(40).throwIfInvalid(value);
+    }
   }
 
   get collection(): TaskListRef {
     return this._collection;
   }
+
   set collection(value: TaskListRef) {
+    if (!this.isUpdatable) {
+      return;
+    }
     this._collection = value;
   }
 
@@ -72,8 +93,20 @@ export default class Task {
   }
 
   set dueDate(value: TaskDueDate | undefined) {
-    // TODO Add validation
+    if (!this.isUpdatable) {
+      return;
+    }
+    this.validateDueDate(value);
+    if (!value) {
+      this.dueTime = undefined;
+    }
     this._dueDate = value;
+  }
+
+  private validateDueDate(value: TaskDueDate | undefined) {
+    if (value) {
+      new DateSpecification().throwIfInvalid(value);
+    }
   }
 
   get dueTime(): TaskDueTime | undefined {
@@ -81,8 +114,20 @@ export default class Task {
   }
 
   set dueTime(value: TaskDueTime | undefined) {
-    // TODO Add validation
+    if (!this.isUpdatable) {
+      return;
+    }
+    this.validateDueTime(value);
     this._dueTime = value;
+  }
+
+  private validateDueTime(value: string | undefined) {
+    if (value) {
+      new TimeSpecification().throwIfInvalid(value);
+      if (!this.dueDate) {
+        throw new Error("Due date must not be null, if due time is not null");
+      }
+    }
   }
 
   get status(): TaskStatus {
@@ -90,13 +135,11 @@ export default class Task {
   }
 
   get isUpdatable(): TaskIsUpdatable {
-    // TODO Implement
-    return true;
+    return this.status.code === "O";
   }
 
   get isDeletable(): TaskIsDeletable {
-    // TODO Implement
-    return true;
+    return this.isUpdatable;
   }
 
   get priority(): TaskPriority | undefined {
@@ -104,6 +147,9 @@ export default class Task {
   }
 
   set priority(value: TaskPriority | undefined) {
+    if (!this.isUpdatable) {
+      return;
+    }
     this._priority = value;
   }
 
@@ -112,6 +158,9 @@ export default class Task {
   }
 
   set isPlannedForMyDay(value: TaskIsPlannedForMyDay) {
+    if (!this.isUpdatable) {
+      return;
+    }
     this._isPlannedForMyDay = value;
   }
 }
