@@ -42,6 +42,28 @@ paths:
                 $ref: "#/components/schemas/ServerInfo"
         "404":
           description: Not Found
+  /Tasks:
+    get:
+      operationId: getTasks
+      summary: Get a list of tasks
+      parameters:
+        - name: collection
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ServerInfo"
 
 components:
   schemas:
