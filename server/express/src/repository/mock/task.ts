@@ -9,7 +9,7 @@ export default class TaskMockRepository implements TaskRepository {
     this.db = MockDb.instance;
   }
 
-  getOne(id: TaskId): Promise<Task | undefined> {
+  findById(id: TaskId): Promise<Task | undefined> {
     return Promise.resolve(this.db.tasks.get(id));
   }
 }

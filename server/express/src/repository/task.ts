@@ -9,5 +9,5 @@ export interface TaskRepository {
    * @param id a task's ID
    * @returns optional Task entity
    */
-  getOne(id: TaskId): Promise<Task | undefined>;
+  findById(id: TaskId): Promise<Task | undefined>;
 }

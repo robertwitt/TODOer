@@ -45,7 +45,7 @@ export default class TaskService {
    */
   async getTask(id: TaskId): Promise<TaskPayload | undefined> {
     const repository = repositoryFactory.getTaskRepository();
-    const task = await repository.getOne(id);
+    const task = await repository.findById(id);
     return task ? this.createTaskPayload(task) : undefined;
   }
 
