@@ -71,4 +71,9 @@ export default class TaskService {
       isPlannedForMyDay: model.isPlannedForMyDay,
     };
   }
+
+  findTasks(params: { collection?: TaskListId } = {}): Promise<TaskPayload[]> {
+    // TODO Invoke repository
+    return Promise.resolve([]);
+  }
 }

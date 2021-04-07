@@ -1,2 +1,2 @@
-export { getTask } from "./task";
+export { getTask, getTasks } from "./task";
 export { ping } from "./ping";
