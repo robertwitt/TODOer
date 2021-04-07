@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The API server can read a single task by ID 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-05-31",
+  "dueTime": null,
+  "id": 1,
+  "isDeletable": true,
+  "isPlannedForMyDay": false,
+  "isUpdatable": true,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "Tax declaration",
+}
+`;
