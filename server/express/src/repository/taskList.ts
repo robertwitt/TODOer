@@ -10,4 +10,11 @@ export interface TaskListRepository {
    * @returns optional reference of a TaskList entity
    */
   findRefById(id: TaskListId): Promise<TaskListRef | undefined>;
+
+  /**
+   * Get a single task list reference by ID
+   * @param id a task list's ID
+   * @returns reference of a TaskList entity
+   */
+  getOneRef(id: TaskListId): Promise<TaskListRef>;
 }

@@ -13,4 +13,12 @@ export default class TaskPriorityMockRepository
   private copyTaskPriority(status: TaskPriority): TaskPriority {
     return new TaskPriority(status.code, status.name);
   }
+
+  async getOne(code: TaskPriorityCode): Promise<TaskPriority> {
+    const priority = await this.findByCode(code);
+    if (!priority) {
+      throw new Error(`A task priority with code '${code}' does not exist`);
+    }
+    return priority;
+  }
 }

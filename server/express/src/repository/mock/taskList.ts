@@ -9,4 +9,12 @@ export default class TaskListMockRepository
     const listRef = this.db.taskLists.get(id)?.ref;
     return Promise.resolve(listRef);
   }
+
+  async getOneRef(id: TaskListId): Promise<TaskListRef> {
+    const listRef = await this.findRefById(id);
+    if (!listRef) {
+      throw new Error(`A task list with ID ${id} does not exist`);
+    }
+    return listRef;
+  }
 }

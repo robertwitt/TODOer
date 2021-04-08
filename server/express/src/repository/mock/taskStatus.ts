@@ -13,4 +13,12 @@ export default class TaskStatusMockRepository
   private copyTaskStatus(status: TaskStatus): TaskStatus {
     return new TaskStatus(status.code, status.name);
   }
+
+  async getOne(code: TaskStatusCode): Promise<TaskStatus> {
+    const status = await this.findByCode(code);
+    if (!status) {
+      throw new Error(`A task status with code '${code}' does not exist`);
+    }
+    return status;
+  }
 }
