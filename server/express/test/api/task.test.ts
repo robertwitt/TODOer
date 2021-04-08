@@ -30,7 +30,7 @@ describe("The API server", () => {
 
   it("can create a new task", async () => {
     const { body } = await request
-      .post("beta/Tasks")
+      .post("/beta/Tasks")
       .send({
         collection: 1,
         title: "new task",
