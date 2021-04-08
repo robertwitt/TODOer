@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ApiError } from "../service/error";
 
 /**
  * Express handler for errors.
@@ -15,5 +16,6 @@ export function handleError(
   next: NextFunction
 ): void {
   console.error(err);
-  res.status(500).render("error", { error: err });
+  const status = ApiError.is(err) ? err.code : 500;
+  res.status(status).render("error", { error: err });
 }
