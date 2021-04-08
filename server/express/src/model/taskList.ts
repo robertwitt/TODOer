@@ -1,3 +1,5 @@
+import { Entity } from "./abstract";
+
 export type TaskListId = number;
 
 export type TaskListTitle = string;
@@ -11,17 +13,12 @@ type TaskListData = {
   title?: TaskListTitle;
 };
 
-export default class TaskList {
-  private readonly _id: TaskListId;
+export default class TaskList extends Entity<TaskListId, TaskListData> {
   private _title?: TaskListTitle;
 
   constructor(id: TaskListId, data: TaskListData) {
-    this._id = id;
+    super(id, data);
     this._title = data.title;
-  }
-
-  get id(): TaskListId {
-    return this._id;
   }
 
   get title(): TaskListTitle | undefined {
