@@ -9,7 +9,7 @@ export type TaskListRef = {
   title?: TaskListTitle;
 };
 
-type TaskListData = {
+export type TaskListData = {
   title?: TaskListTitle;
 };
 

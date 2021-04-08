@@ -19,7 +19,7 @@ export type TaskIsDeletable = boolean;
 
 export type TaskIsPlannedForMyDay = boolean;
 
-type TaskData = {
+export type TaskData = {
   title?: TaskTitle;
   collection: TaskListRef;
   dueDate?: TaskDueDate;
