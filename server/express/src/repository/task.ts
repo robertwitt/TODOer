@@ -1,4 +1,4 @@
-import Task, { TaskId } from "../model/task";
+import Task, { TaskData, TaskId } from "../model/task";
 import { TaskListId } from "../model/taskList";
 
 /**
@@ -24,4 +24,18 @@ export interface TaskRepository {
    * @returns list of Task entities
    */
   findAllByCollection(collection: TaskListId): Promise<Task[]>;
+
+  /**
+   * Create a new Task entity container with specified data
+   * @param data task data
+   * @returns Task entity
+   */
+  create(data: TaskData): Task;
+
+  /**
+   * Save a Task in the repository
+   * @param task Task entity
+   * @return saved Task entity
+   */
+  save(task: Task): Promise<Task>;
 }

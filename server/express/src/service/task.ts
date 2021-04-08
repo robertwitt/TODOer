@@ -1,4 +1,5 @@
 import Task, {
+  TaskData,
   TaskDueDate,
   TaskDueTime,
   TaskId,
@@ -11,6 +12,7 @@ import { TaskListId, TaskListTitle } from "../model/taskList";
 import { TaskPriorityCode, TaskPriorityName } from "../model/taskPriority";
 import { TaskStatusCode, TaskStatusName } from "../model/taskStatus";
 import { repositoryFactory } from "../repository";
+import { ApiError } from "./error";
 
 export type TaskPayload = {
   id: TaskId;
@@ -32,6 +34,15 @@ export type TaskPayload = {
     name: TaskPriorityName | null;
   };
   isPlannedForMyDay: TaskIsPlannedForMyDay;
+};
+
+export type TaskCreatePayload = {
+  title?: TaskTitle | null;
+  collection: TaskListId;
+  dueDate?: TaskDueDate | null;
+  dueTime?: TaskDueTime | null;
+  priority?: TaskPriorityCode | null;
+  isPlannedForMyDay?: TaskIsPlannedForMyDay;
 };
 
 /**
@@ -81,5 +92,33 @@ export default class TaskService {
       ? repository.findAllByCollection(collection)
       : repository.findAll();
     return (await tasks).map(this.createTaskPayload);
+  }
+
+  async createTask(payload: TaskCreatePayload): Promise<TaskPayload> {
+    const listRepository = repositoryFactory.getTaskListRepository();
+    const statusRepository = repositoryFactory.getTaskStatusRepository();
+    const priorityRepository = repositoryFactory.getTaskPriorityRepository();
+    const taskRepository = repositoryFactory.getTaskRepository();
+
+    let task: Task;
+    try {
+      const data: TaskData = {
+        title: payload.title ?? undefined,
+        collection: await listRepository.getOneRef(payload.collection),
+        dueDate: payload.dueDate ?? undefined,
+        dueTime: payload.dueTime ?? undefined,
+        status: await statusRepository.getOne("O"),
+        priority: payload.priority
+          ? await priorityRepository.getOne(payload.priority)
+          : undefined,
+        isPlannedForMyDay: payload.isPlannedForMyDay ?? undefined,
+      };
+      task = taskRepository.create(data);
+    } catch (error) {
+      throw new ApiError(400, error.message);
+    }
+
+    task = await taskRepository.save(task);
+    return this.createTaskPayload(task);
   }
 }

@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`The API server can create a new task 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-04-08",
+  "dueTime": null,
+  "id": 43,
+  "isDeletable": true,
+  "isPlannedForMyDay": true,
+  "isUpdatable": true,
+  "priority": null,
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "new task",
+}
+`;
+
 exports[`The API server can filter tasks by collection 1`] = `
 Object {
   "value": Array [

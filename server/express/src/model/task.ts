@@ -1,5 +1,6 @@
 import { DateSpecification, TimeSpecification } from "../specification/date";
 import { StringLengthSpecification } from "../specification/string";
+import { Entity } from "./abstract";
 import { TaskListRef } from "./taskList";
 import TaskPriority from "./taskPriority";
 import TaskStatus from "./taskStatus";
@@ -18,7 +19,7 @@ export type TaskIsDeletable = boolean;
 
 export type TaskIsPlannedForMyDay = boolean;
 
-type TaskData = {
+export type TaskData = {
   title?: TaskTitle;
   collection: TaskListRef;
   dueDate?: TaskDueDate;
@@ -31,8 +32,7 @@ type TaskData = {
 /**
  * Implementation of the Task model entity
  */
-export default class Task {
-  private readonly _id: TaskId;
+export default class Task extends Entity<TaskId, TaskData> {
   private _title?: TaskTitle;
   private _collection: TaskListRef;
   private _dueDate?: TaskDueDate;
@@ -42,7 +42,7 @@ export default class Task {
   private _isPlannedForMyDay: TaskIsPlannedForMyDay;
 
   constructor(id: TaskId, data: TaskData) {
-    this._id = id;
+    super(id, data);
     this.validateTitle(data.title);
     this._title = data.title;
     this._collection = data.collection;
@@ -53,10 +53,6 @@ export default class Task {
     this._status = data.status;
     this._priority = data.priority;
     this._isPlannedForMyDay = data.isPlannedForMyDay ?? false;
-  }
-
-  get id(): TaskId {
-    return this._id;
   }
 
   get title(): TaskTitle | undefined {

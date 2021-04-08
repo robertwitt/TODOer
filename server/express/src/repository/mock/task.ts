@@ -1,21 +1,17 @@
-import Task, { TaskId } from "../../model/task";
+import Task, { TaskData, TaskId } from "../../model/task";
 import { TaskRepository } from "../task";
-import MockDb from "./db";
+import { AbstractMockRepository } from "./abstract";
 
-export default class TaskMockRepository implements TaskRepository {
-  private readonly db: MockDb;
-
-  constructor() {
-    this.db = MockDb.instance;
-  }
-
+export default class TaskMockRepository
+  extends AbstractMockRepository
+  implements TaskRepository {
   findById(id: TaskId): Promise<Task | undefined> {
     const task = this.db.tasks.get(id);
     return Promise.resolve(task ? this.copyTask(task) : undefined);
   }
 
-  private copyTask(task: Task): Task {
-    return new Task(task.id, {
+  private copyTask(task: Task, id?: number): Task {
+    return new Task(id ?? task.id, {
       title: task.title,
       collection: { ...task.collection },
       dueDate: task.dueDate,
@@ -29,7 +25,7 @@ export default class TaskMockRepository implements TaskRepository {
   findAll(): Promise<Task[]> {
     const tasks = Array.from(this.db.tasks.values())
       .sort(this.sortTasks)
-      .map(this.copyTask);
+      .map((task) => this.copyTask(task));
     return Promise.resolve(tasks);
   }
 
@@ -41,7 +37,25 @@ export default class TaskMockRepository implements TaskRepository {
     const tasks = Array.from(this.db.tasks.values())
       .filter((task) => task.collection.id === collection)
       .sort(this.sortTasks)
-      .map(this.copyTask);
+      .map((task) => this.copyTask(task));
     return Promise.resolve(tasks);
+  }
+
+  create(data: TaskData): Task {
+    return new Task(-1, data);
+  }
+
+  save(task: Task): Promise<Task> {
+    const id = task.id === -1 ? this.getNextId() : task.id;
+    const savedTask = this.copyTask(task, id);
+    this.db.tasks.set(savedTask.id, savedTask);
+    return Promise.resolve(this.copyTask(savedTask));
+  }
+
+  private getNextId(): TaskId {
+    const allIds = Array.from(this.db.tasks.keys()).sort(
+      (id1, id2) => id2 - id1
+    );
+    return allIds.length === 0 ? 1 : allIds[0] + 1;
   }
 }
