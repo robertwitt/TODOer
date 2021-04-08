@@ -3,11 +3,7 @@ import { TaskRepository } from "../task";
 import MockDb from "./db";
 
 export default class TaskMockRepository implements TaskRepository {
-  private readonly db: MockDb;
-
-  constructor() {
-    this.db = MockDb.instance;
-  }
+  private readonly db = MockDb.instance;
 
   findById(id: TaskId): Promise<Task | undefined> {
     const task = this.db.tasks.get(id);
