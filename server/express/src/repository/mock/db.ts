@@ -42,6 +42,10 @@ export default class MockDb {
     return this._taskLists;
   }
 
+  reset(): void {
+    this.initialize();
+  }
+
   private initialize(): void {
     const openStatus = new TaskStatus("O", "open");
     const doneStatus = new TaskStatus("D", "done");
