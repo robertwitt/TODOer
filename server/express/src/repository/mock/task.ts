@@ -1,10 +1,10 @@
 import Task, { TaskId } from "../../model/task";
 import { TaskRepository } from "../task";
-import MockDb from "./db";
+import { AbstractMockRepository } from "./abstract";
 
-export default class TaskMockRepository implements TaskRepository {
-  private readonly db = MockDb.instance;
-
+export default class TaskMockRepository
+  extends AbstractMockRepository
+  implements TaskRepository {
   findById(id: TaskId): Promise<Task | undefined> {
     const task = this.db.tasks.get(id);
     return Promise.resolve(task ? this.copyTask(task) : undefined);
