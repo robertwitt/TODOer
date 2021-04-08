@@ -25,4 +25,23 @@ export default class TaskMockRepository implements TaskRepository {
       isPlannedForMyDay: task.isPlannedForMyDay,
     });
   }
+
+  findAll(): Promise<Task[]> {
+    const tasks = Array.from(this.db.tasks.values())
+      .sort(this.sortTasks)
+      .map(this.copyTask);
+    return Promise.resolve(tasks);
+  }
+
+  private sortTasks(task1: Task, task2: Task): number {
+    return task1.id - task2.id;
+  }
+
+  findAllByCollection(collection: number): Promise<Task[]> {
+    const tasks = Array.from(this.db.tasks.values())
+      .filter((task) => task.collection.id === collection)
+      .sort(this.sortTasks)
+      .map(this.copyTask);
+    return Promise.resolve(tasks);
+  }
 }

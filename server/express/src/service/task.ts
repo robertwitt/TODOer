@@ -72,8 +72,14 @@ export default class TaskService {
     };
   }
 
-  findTasks(params: { collection?: TaskListId } = {}): Promise<TaskPayload[]> {
-    // TODO Invoke repository
-    return Promise.resolve([]);
+  async findTasks(
+    params: { collection?: TaskListId } = {}
+  ): Promise<TaskPayload[]> {
+    const repository = repositoryFactory.getTaskRepository();
+    const { collection } = params;
+    const tasks = collection
+      ? repository.findAllByCollection(collection)
+      : repository.findAll();
+    return (await tasks).map(this.createTaskPayload);
   }
 }
