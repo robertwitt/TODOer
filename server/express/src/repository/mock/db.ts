@@ -1,6 +1,6 @@
 import Task from "../../model/task";
 import { TaskListId, TaskListRef } from "../../model/taskList";
-import TaskPriority from "../../model/taskPriority";
+import TaskPriority, { TaskPriorityCode } from "../../model/taskPriority";
 import TaskStatus, { TaskStatusCode } from "../../model/taskStatus";
 
 export default class MockDb {
@@ -16,10 +16,12 @@ export default class MockDb {
 
   private _tasks: Map<TaskListId, Task>;
   private _taskStatuses: Map<TaskStatusCode, TaskStatus>;
+  private _taskPriorities: Map<TaskPriorityCode, TaskPriority>;
 
   private constructor() {
     this._tasks = new Map();
     this._taskStatuses = new Map();
+    this._taskPriorities = new Map();
   }
 
   get tasks(): Map<TaskListId, Task> {
@@ -30,17 +32,32 @@ export default class MockDb {
     return this._taskStatuses;
   }
 
+  public get taskPriorities(): Map<TaskPriorityCode, TaskPriority> {
+    return this._taskPriorities;
+  }
+
   private initialize(): void {
     const openStatus = new TaskStatus("O", "open");
     const doneStatus = new TaskStatus("D", "done");
     const cancelledStatus = new TaskStatus("X", "cancelled");
+    this.taskStatuses.clear();
     this.taskStatuses
       .set("O", openStatus)
       .set("D", doneStatus)
       .set("X", cancelledStatus);
 
-    const myTasks: TaskListRef = { id: 1, title: "My Tasks" };
+    const highPriority = new TaskPriority(1, "high");
+    const mediumPriority = new TaskPriority(3, "medium");
     const lowPriority = new TaskPriority(5, "low");
+    this.taskPriorities.clear();
+    this.taskPriorities
+      .set(1, highPriority)
+      .set(3, mediumPriority)
+      .set(5, lowPriority);
+
+    const myTasks: TaskListRef = { id: 1, title: "My Tasks" };
+
+    this.tasks.clear();
     this.tasks
       .set(
         1,
