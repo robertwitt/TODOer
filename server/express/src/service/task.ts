@@ -71,4 +71,15 @@ export default class TaskService {
       isPlannedForMyDay: model.isPlannedForMyDay,
     };
   }
+
+  async findTasks(
+    params: { collection?: TaskListId } = {}
+  ): Promise<TaskPayload[]> {
+    const repository = repositoryFactory.getTaskRepository();
+    const { collection } = params;
+    const tasks = collection
+      ? repository.findAllByCollection(collection)
+      : repository.findAll();
+    return (await tasks).map(this.createTaskPayload);
+  }
 }

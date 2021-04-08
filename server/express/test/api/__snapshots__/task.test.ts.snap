@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`The API server can filter tasks by collection 1`] = `
+Object {
+  "value": Array [
+    Object {
+      "collection": Object {
+        "id": 42,
+        "title": null,
+      },
+      "dueDate": null,
+      "dueTime": null,
+      "id": 42,
+      "isDeletable": false,
+      "isPlannedForMyDay": false,
+      "isUpdatable": false,
+      "priority": null,
+      "status": Object {
+        "code": "D",
+        "name": "done",
+      },
+      "title": "What is the meaning of life?",
+    },
+  ],
+}
+`;
+
 exports[`The API server can read a single task by ID 1`] = `
 Object {
   "collection": Object {
