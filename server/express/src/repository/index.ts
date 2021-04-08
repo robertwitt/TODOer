@@ -1,5 +1,6 @@
 import { MockRepositoryFactory } from "./mock";
 import { TaskRepository } from "./task";
+import { TaskListRepository } from "./taskList";
 import { TaskPriorityRepository } from "./taskPriority";
 import { TaskStatusRepository } from "./taskStatus";
 
@@ -24,6 +25,12 @@ export interface RepositoryFactory {
    * @returns a TaskPriority repository
    */
   getTaskPriorityRepository(): TaskPriorityRepository;
+
+  /**
+   * Get a repository for TaskList entities
+   * @returns a TaskList repository
+   */
+  getTaskListRepository(): TaskListRepository;
 }
 
 export const repositoryFactory = new MockRepositoryFactory();
