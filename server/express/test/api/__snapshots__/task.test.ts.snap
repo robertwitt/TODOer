@@ -69,3 +69,27 @@ Object {
   "title": "Tax declaration",
 }
 `;
+
+exports[`The API server can update a task 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-04-10",
+  "dueTime": "18:00:00",
+  "id": 1,
+  "isDeletable": true,
+  "isPlannedForMyDay": true,
+  "isUpdatable": true,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "Tax declaration",
+}
+`;

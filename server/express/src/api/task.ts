@@ -84,3 +84,36 @@ export async function createTask(
     next(err);
   }
 }
+
+/**
+ * Handler of PATH /Tasks/{id}
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function updateTask(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const taskId = Number(req.params.id);
+  if (!taskId) {
+    next(new ApiError(400, "Task ID is required"));
+  }
+  const body = req.body;
+
+  try {
+    const service = new TaskService();
+    const task = await service.updateTask(taskId, {
+      title: body.title,
+      collection: body.collection,
+      dueDate: body.dueDate,
+      dueTime: body.dueTime,
+      isPlannedForMyDay: body.isPlannedForMyDay,
+    });
+    res.json(task);
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
