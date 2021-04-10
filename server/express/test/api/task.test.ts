@@ -65,11 +65,28 @@ describe("The API server", () => {
     expect(body).toMatchSnapshot();
   });
 
+  it("cannot update a done task", async () => {
+    await request
+      .patch("/beta/Tasks/42")
+      .send({ title: "updated" })
+      .expect(400);
+  });
+
   it("fails updating a task with unknown collection", async () => {
     await request.patch("/beta/Tasks/1").send({ collection: 99 }).expect(400);
   });
 
   it("fails updating a task with nulled collection", async () => {
     await request.patch("/beta/Tasks/1").send({ collection: null }).expect(400);
+  });
+
+  it("can delete a task by its ID", async () => {
+    await request.delete("/beta/Tasks/1").expect(204);
+    await request.get("/beta/Tasks/1").expect(404);
+  });
+
+  it("cannot delete a done task", async () => {
+    await request.delete("/beta/Tasks/42").expect(400);
+    await request.get("/beta/Tasks/42").expect(200);
   });
 });
