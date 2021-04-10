@@ -86,7 +86,7 @@ export async function createTask(
 }
 
 /**
- * Handler of PATH /Tasks/{id}
+ * Handler of PATCH /Tasks/{id}
  * @param req the request
  * @param res the response
  * @param next pointer to next handler
@@ -112,6 +112,32 @@ export async function updateTask(
       isPlannedForMyDay: body.isPlannedForMyDay,
     });
     res.json(task);
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ * Handler of DELETE /Tasks/{id}
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function deleteTask(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const taskId = Number(req.params.id);
+  if (!taskId) {
+    next(new ApiError(400, "Task ID is required"));
+  }
+
+  try {
+    const service = new TaskService();
+    await service.deleteTask(taskId);
+    res.status(204).send();
     next();
   } catch (err) {
     next(err);

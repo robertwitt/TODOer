@@ -5,6 +5,10 @@ import { AbstractMockRepository } from "./abstract";
 export default class TaskMockRepository
   extends AbstractMockRepository
   implements TaskRepository {
+  existsById(id: TaskId): Promise<boolean> {
+    return Promise.resolve(this.db.tasks.has(id));
+  }
+
   findById(id: TaskId): Promise<Task | undefined> {
     const task = this.db.tasks.get(id);
     return Promise.resolve(task ? this.copyTask(task) : undefined);
@@ -57,5 +61,10 @@ export default class TaskMockRepository
       (id1, id2) => id2 - id1
     );
     return allIds.length === 0 ? 1 : allIds[0] + 1;
+  }
+
+  deleteById(id: TaskId): Promise<void> {
+    this.db.tasks.delete(id);
+    return Promise.resolve();
   }
 }
