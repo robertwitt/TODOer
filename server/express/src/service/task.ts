@@ -156,6 +156,9 @@ export default class TaskService {
     if (!task) {
       return;
     }
+    if (!task.isUpdatable) {
+      throw new ApiError(400, `Task ${task.id} cannot be updated`);
+    }
 
     try {
       if (payload.title !== undefined) {
@@ -188,5 +191,17 @@ export default class TaskService {
 
     task = await taskRepository.save(task);
     return this.createTaskPayload(task);
+  }
+
+  async deleteTask(id: TaskId): Promise<void> {
+    const repository = repositoryFactory.getTaskRepository();
+    const task = await repository.findById(id);
+    if (!task) {
+      throw new ApiError(404, `A task with ${id} does not exists`);
+    }
+    if (!task.isDeletable) {
+      throw new ApiError(400, `Task ${task.id} cannot be deleted`);
+    }
+    await repository.deleteById(id);
   }
 }
