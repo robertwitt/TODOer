@@ -6,6 +6,13 @@ import { TaskListId } from "../model/taskList";
  */
 export interface TaskRepository {
   /**
+   * Check whether a task for a given ID exists in this repository
+   * @param id a task's ID
+   * @returns true if a task exists, false otherwise
+   */
+  existsById(id: TaskId): Promise<boolean>;
+
+  /**
    * Get a single task by ID
    * @param id a task's ID
    * @returns optional Task entity
@@ -38,4 +45,10 @@ export interface TaskRepository {
    * @return saved Task entity
    */
   save(task: Task): Promise<Task>;
+
+  /**
+   * Delete a Task by its ID from this repository
+   * @param id a task's ID
+   */
+  deleteById(id: TaskId): Promise<void>;
 }
