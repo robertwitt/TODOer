@@ -52,4 +52,24 @@ describe("The API server", () => {
   it("fails creating a task without collection", async () => {
     await request.post("/beta/Tasks").send({ title: "new task" }).expect(400);
   });
+
+  it("can update a task", async () => {
+    const { body } = await request
+      .patch("/beta/Tasks/1")
+      .send({
+        dueDate: "2021-04-10",
+        dueTime: "18:00:00",
+        isPlannedForMyDay: true,
+      })
+      .expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("fails updating a task with unknown collection", async () => {
+    await request.patch("/beta/Tasks/1").send({ collection: 99 }).expect(400);
+  });
+
+  it("fails updating a task with nulled collection", async () => {
+    await request.patch("/beta/Tasks/1").send({ collection: null }).expect(400);
+  });
 });
