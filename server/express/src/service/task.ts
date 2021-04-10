@@ -45,6 +45,15 @@ export type TaskCreatePayload = {
   isPlannedForMyDay?: TaskIsPlannedForMyDay;
 };
 
+export type TaskUpdatePayload = {
+  title?: TaskTitle | null;
+  collection?: TaskListId;
+  dueDate?: TaskDueDate | null;
+  dueTime?: TaskDueTime | null;
+  priority?: TaskPriorityCode | null;
+  isPlannedForMyDay?: TaskIsPlannedForMyDay;
+};
+
 /**
  * Implementation of a service for Task entities
  */
@@ -83,6 +92,11 @@ export default class TaskService {
     };
   }
 
+  /**
+   * Find tasks and return as array
+   * @param params optional parameters
+   * @returns
+   */
   async findTasks(
     params: { collection?: TaskListId } = {}
   ): Promise<TaskPayload[]> {
@@ -94,6 +108,11 @@ export default class TaskService {
     return (await tasks).map(this.createTaskPayload);
   }
 
+  /**
+   * Create a new task with specified data
+   * @param payload data to create a task with
+   * @returns created task
+   */
   async createTask(payload: TaskCreatePayload): Promise<TaskPayload> {
     const listRepository = repositoryFactory.getTaskListRepository();
     const statusRepository = repositoryFactory.getTaskStatusRepository();
@@ -114,6 +133,55 @@ export default class TaskService {
         isPlannedForMyDay: payload.isPlannedForMyDay ?? undefined,
       };
       task = taskRepository.create(data);
+    } catch (error) {
+      throw new ApiError(400, error.message);
+    }
+
+    task = await taskRepository.save(task);
+    return this.createTaskPayload(task);
+  }
+
+  /**
+   * Update a given task with specified data
+   * @param id a task's ID
+   * @param payload data to update the task with
+   * @returns updated task
+   */
+  async updateTask(
+    id: TaskId,
+    payload: TaskUpdatePayload
+  ): Promise<TaskPayload | undefined> {
+    const taskRepository = repositoryFactory.getTaskRepository();
+    let task = await taskRepository.findById(id);
+    if (!task) {
+      return;
+    }
+
+    try {
+      if (payload.title !== undefined) {
+        task.title = payload.title ?? undefined;
+      }
+      if (payload.collection !== undefined) {
+        task.collection = await repositoryFactory
+          .getTaskListRepository()
+          .getOneRef(payload.collection);
+      }
+      if (payload.dueDate !== undefined) {
+        task.dueDate = payload.dueDate ?? undefined;
+      }
+      if (payload.dueTime !== undefined) {
+        task.dueTime = payload.dueTime ?? undefined;
+      }
+      if (payload.priority !== undefined) {
+        task.priority = !payload.priority
+          ? undefined
+          : await repositoryFactory
+              .getTaskPriorityRepository()
+              .getOne(payload.priority);
+      }
+      if (payload.isPlannedForMyDay !== undefined) {
+        task.isPlannedForMyDay = payload.isPlannedForMyDay ?? undefined;
+      }
     } catch (error) {
       throw new ApiError(400, error.message);
     }
