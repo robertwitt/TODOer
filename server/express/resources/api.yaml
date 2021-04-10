@@ -42,6 +42,29 @@ paths:
                 $ref: "#/components/schemas/Task"
         "404":
           description: Not Found
+    patch:
+      operationId: updateTask
+      summary: Update a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task-update"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
   /Tasks:
     get:
       operationId: getTasks
@@ -177,3 +200,23 @@ components:
           type: boolean
       required:
         - collection
+    Task-update:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 40
+        collection:
+          type: integer
+          format: int64
+        dueDate:
+          type: string
+          format: date
+        dueTime:
+          type: string
+          maxLength: 8
+        priority:
+          type: integer
+          format: int32
+        isPlannedForMyDay:
+          type: boolean
