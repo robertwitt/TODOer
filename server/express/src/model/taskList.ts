@@ -1,3 +1,5 @@
+import { ColorSpecification } from "../specification/color";
+import { StringLengthSpecification } from "../specification/string";
 import { Entity } from "./abstract";
 import { TaskIsDeletable, TaskIsUpdatable } from "./task";
 
@@ -31,6 +33,9 @@ export type TaskListData = {
   isDefaultCollection?: TaskListIsDefaultCollection;
 };
 
+/**
+ * Implementation of the TaskList model entity
+ */
 export default class TaskList extends Entity<TaskListId, TaskListData> {
   private _title?: TaskListTitle;
   private _color?: TaskListColor;
@@ -39,8 +44,11 @@ export default class TaskList extends Entity<TaskListId, TaskListData> {
 
   constructor(id: TaskListId, data: TaskListData) {
     super(id, data);
+    this.validateTitle(data.title);
     this._title = data.title;
-    this._color = data.color;
+    this.validateColor(data.color);
+    this._color =
+      data.type === TaskListType.Collection ? data.color : undefined;
     this._type = data.type;
     this._isDefaultCollection =
       data.type === TaskListType.Collection
@@ -53,8 +61,17 @@ export default class TaskList extends Entity<TaskListId, TaskListData> {
   }
 
   set title(value: TaskListTitle | undefined) {
-    // TODO Validate title
+    if (!this.isUpdatable) {
+      return;
+    }
+    this.validateTitle(value);
     this._title = value;
+  }
+
+  private validateTitle(value: TaskListTitle | undefined) {
+    if (value) {
+      new StringLengthSpecification(40).throwIfInvalid(value);
+    }
   }
 
   get color(): TaskListColor | undefined {
@@ -62,8 +79,17 @@ export default class TaskList extends Entity<TaskListId, TaskListData> {
   }
 
   set color(value: TaskListColor | undefined) {
-    // TODO Validate color
-    this._color = value;
+    if (!this.isUpdatable) {
+      return;
+    }
+    this.validateColor(value);
+    this._color = value?.toUpperCase();
+  }
+
+  private validateColor(value: TaskListColor | undefined) {
+    if (value) {
+      new ColorSpecification().throwIfInvalid(value);
+    }
   }
 
   get type(): TaskListType {
@@ -83,7 +109,9 @@ export default class TaskList extends Entity<TaskListId, TaskListData> {
   }
 
   public set isDefaultCollection(value: TaskListIsDefaultCollection) {
-    // TODO Check for type
+    if (!this.isUpdatable) {
+      return;
+    }
     this._isDefaultCollection = value;
   }
 

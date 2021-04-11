@@ -78,11 +78,11 @@ describe("Updating a TaskList entity", () => {
     expect(list.isDefaultCollection).toBeFalsy();
 
     list.title = "updated title";
-    list.color = "fd03245";
+    list.color = "fd0325";
     list.isDefaultCollection = true;
     expect(list.id).toEqual(1);
     expect(list.title).toEqual("updated title");
-    expect(list.color).toEqual("FD03245");
+    expect(list.color).toEqual("FD0325");
     expect(list.type).toEqual("COLLECTION");
     expect(list.isUpdatable).toBeTruthy();
     expect(list.isDeletable).toBeTruthy();
@@ -104,6 +104,7 @@ describe("Updating a TaskList entity", () => {
 
     list.title = "updated title";
     list.color = "034259";
+    list.isDefaultCollection = true;
     expect(list.id).toEqual(1);
     expect(list.title).toEqual("My Day");
     expect(list.color).toBeUndefined();
