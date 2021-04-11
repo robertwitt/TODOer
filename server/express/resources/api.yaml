@@ -22,6 +22,44 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServerInfo"
+  /Tasks:
+    get:
+      operationId: getTasks
+      summary: Get a list of tasks
+      parameters:
+        - name: collection
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Task"
+    post:
+      operationId: createTask
+      summary: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task-create"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
   /Tasks/{id}:
     get:
       operationId: getTask
@@ -82,44 +120,54 @@ paths:
           description: No Content
         "404":
           description: Not Found
-  /Tasks:
-    get:
-      operationId: getTasks
-      summary: Get a list of tasks
+  /Tasks/{id}/setToDone:
+    post:
+      operationId: setTaskToDone
+      summary: Set a task's status to done
       parameters:
-        - name: collection
-          in: query
+        - name: id
+          in: path
+          required: true
           schema:
             type: integer
             format: int64
       responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  value:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Task"
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+  /Tasks/{id}/cancel:
     post:
-      operationId: createTask
-      summary: Create a new task
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Task-create"
+      operationId: cancelTask
+      summary: Cancel a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Task"
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+  /Tasks/{id}/reopen:
+    post:
+      operationId: reopenTask
+      summary: Reopen a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
 
 components:
   schemas:

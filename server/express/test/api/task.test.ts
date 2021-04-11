@@ -109,7 +109,7 @@ describe("The API server", () => {
   });
 
   it("can update status with idempotent calls", async () => {
-    await request.post("/beta/Tasks/42/done").expect(204);
+    await request.post("/beta/Tasks/42/setToDone").expect(204);
     const { body } = await request.get("/beta/Tasks/42").expect(200);
     expect(body).toMatchSnapshot();
   });
