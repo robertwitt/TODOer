@@ -89,4 +89,28 @@ describe("The API server", () => {
     await request.delete("/beta/Tasks/42").expect(400);
     await request.get("/beta/Tasks/42").expect(200);
   });
+
+  it("can set a task to done", async () => {
+    await request.post("/beta/Tasks/1/setToDone").expect(204);
+    const { body } = await request.get("/beta/Tasks/1").expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("can cancel a task", async () => {
+    await request.post("/beta/Tasks/1/cancel").expect(204);
+    const { body } = await request.get("/beta/Tasks/1").expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("can reopen a task", async () => {
+    await request.post("/beta/Tasks/42/reopen").expect(204);
+    const { body } = await request.get("/beta/Tasks/42").expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("can update status with idempotent calls", async () => {
+    await request.post("/beta/Tasks/42/done").expect(204);
+    const { body } = await request.get("/beta/Tasks/42").expect(200);
+    expect(body).toMatchSnapshot();
+  });
 });
