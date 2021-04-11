@@ -10,4 +10,16 @@ export type TaskStatusName = string;
 export default class TaskStatus extends CodeList<
   TaskStatusCode,
   TaskStatusName
-> {}
+> {
+  static get open(): TaskStatusCode {
+    return "O";
+  }
+
+  static get done(): TaskStatusCode {
+    return "D";
+  }
+
+  static get cancelled(): TaskStatusCode {
+    return "X";
+  }
+}

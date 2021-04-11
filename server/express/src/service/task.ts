@@ -10,7 +10,10 @@ import Task, {
 } from "../model/task";
 import { TaskListId, TaskListTitle } from "../model/taskList";
 import { TaskPriorityCode, TaskPriorityName } from "../model/taskPriority";
-import { TaskStatusCode, TaskStatusName } from "../model/taskStatus";
+import TaskStatus, {
+  TaskStatusCode,
+  TaskStatusName,
+} from "../model/taskStatus";
 import { repositoryFactory } from "../repository";
 import { ApiError } from "./error";
 
@@ -126,7 +129,7 @@ export default class TaskService {
         collection: await listRepository.getOneRef(payload.collection),
         dueDate: payload.dueDate ?? undefined,
         dueTime: payload.dueTime ?? undefined,
-        status: await statusRepository.getOne("O"),
+        status: await statusRepository.getOne(TaskStatus.open),
         priority: payload.priority
           ? await priorityRepository.getOne(payload.priority)
           : undefined,
@@ -214,7 +217,7 @@ export default class TaskService {
    * @param id a task's ID
    */
   async setTaskToDone(id: TaskId): Promise<void> {
-    return this.updateTaskStatus(id, "D");
+    return this.updateTaskStatus(id, TaskStatus.done);
   }
 
   private async updateTaskStatus(
@@ -244,7 +247,7 @@ export default class TaskService {
    * @param id a task's ID
    */
   async cancelTask(id: TaskId): Promise<void> {
-    return this.updateTaskStatus(id, "X");
+    return this.updateTaskStatus(id, TaskStatus.cancelled);
   }
 
   /**
@@ -252,6 +255,6 @@ export default class TaskService {
    * @param id a task's ID
    */
   async reopenTask(id: TaskId): Promise<void> {
-    return this.updateTaskStatus(id, "O");
+    return this.updateTaskStatus(id, TaskStatus.open);
   }
 }

@@ -135,7 +135,7 @@ export default class Task extends Entity<TaskId, TaskData> {
   }
 
   get isUpdatable(): TaskIsUpdatable {
-    return this.status.code === "O";
+    return this.status.code === TaskStatus.open;
   }
 
   get isDeletable(): TaskIsDeletable {
