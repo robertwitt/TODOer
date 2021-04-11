@@ -184,3 +184,31 @@ async function updateTaskStatus(
     next(err);
   }
 }
+
+/**
+ * Handler of POST /Tasks/{id}/cancel
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function cancelTask(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  updateTaskStatus(req, res, next, (id, service) => service.cancelTask(id));
+}
+
+/**
+ * Handler of POST /Tasks/{id}/reopen
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function reopenTask(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  updateTaskStatus(req, res, next, (id, service) => service.reopenTask(id));
+}

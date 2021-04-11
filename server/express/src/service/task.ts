@@ -238,4 +238,20 @@ export default class TaskService {
     }
     await taskRepository.save(task);
   }
+
+  /**
+   * Cancel a task
+   * @param id a task's ID
+   */
+  async cancelTask(id: TaskId): Promise<void> {
+    return this.updateTaskStatus(id, "X");
+  }
+
+  /**
+   * Reopen a task
+   * @param id a task's ID
+   */
+  async reopenTask(id: TaskId): Promise<void> {
+    return this.updateTaskStatus(id, "O");
+  }
 }
