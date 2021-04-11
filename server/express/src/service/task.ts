@@ -64,12 +64,15 @@ export default class TaskService {
   /**
    * Get a single task by ID
    * @param id a task's ID
-   * @returns optional Task entity
+   * @returns Task entity
    */
-  async getTask(id: TaskId): Promise<TaskPayload | undefined> {
+  async getTask(id: TaskId): Promise<TaskPayload> {
     const repository = repositoryFactory.getTaskRepository();
     const task = await repository.findById(id);
-    return task ? this.createTaskPayload(task) : undefined;
+    if (!task) {
+      throw ApiError.notFound(`A task with ID ${id} does not exist`);
+    }
+    return this.createTaskPayload(task);
   }
 
   private createTaskPayload(model: Task): TaskPayload {
@@ -153,11 +156,11 @@ export default class TaskService {
   async updateTask(
     id: TaskId,
     payload: TaskUpdatePayload
-  ): Promise<TaskPayload | undefined> {
+  ): Promise<TaskPayload> {
     const taskRepository = repositoryFactory.getTaskRepository();
     let task = await taskRepository.findById(id);
     if (!task) {
-      return;
+      throw ApiError.notFound(`A task with ID ${id} does not exist`);
     }
     if (!task.isUpdatable) {
       throw ApiError.badRequest(`Task ${task.id} cannot be updated`);

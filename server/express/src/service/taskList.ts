@@ -27,7 +27,7 @@ export default class TaskListService {
   /**
    * Get a task list by its ID
    * @param id a task list's ID
-   * @returns optional TaskList entity
+   * @returns TaskList entity
    */
   async getTaskList(id: TaskListId): Promise<TaskListPayload> {
     const repository = repositoryFactory.getTaskListRepository();
