@@ -23,7 +23,7 @@ export async function getTask(
   try {
     const service = new TaskService();
     const task = await service.getTask(taskId);
-    task ? res.json(task) : res.status(404);
+    res.json(task);
     next();
   } catch (err) {
     next(err);

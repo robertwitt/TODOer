@@ -168,6 +168,26 @@ paths:
           description: No Content
         "404":
           description: Not Found
+  /TaskLists/{id}:
+    get:
+      operationId: getTaskList
+      summary: Get a task list by key
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
+        "404":
+          description: Not Found
 
 components:
   schemas:
@@ -285,3 +305,34 @@ components:
           format: int32
         isPlannedForMyDay:
           type: boolean
+    TaskList:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
+        type:
+          type: string
+          enum:
+            - COLLECTION
+            - MY_DAY
+            - TOMORROW
+        isUpdatable:
+          type: boolean
+        isDeletable:
+          type: boolean
+        isDefaultCollection:
+          type: boolean
+      required:
+        - id
+        - type
+        - isUpdatable
+        - isDeletable
+        - isDefaultCollection

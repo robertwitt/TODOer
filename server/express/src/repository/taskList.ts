@@ -1,4 +1,4 @@
-import { TaskListId, TaskListRef } from "../model/taskList";
+import TaskList, { TaskListId, TaskListRef } from "../model/taskList";
 
 /**
  * Repository to managed TaskList entities
@@ -17,4 +17,11 @@ export interface TaskListRepository {
    * @returns reference of a TaskList entity
    */
   getOneRef(id: TaskListId): Promise<TaskListRef>;
+
+  /**
+   * Get a single task list by ID
+   * @param id a task list's ID
+   * @returns optional TaskList entity
+   */
+  findById(id: TaskListId): Promise<TaskList | undefined>;
 }

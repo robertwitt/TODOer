@@ -1,5 +1,5 @@
 import Task from "../../model/task";
-import TaskList, { TaskListId } from "../../model/taskList";
+import TaskList, { TaskListId, TaskListType } from "../../model/taskList";
 import TaskPriority, { TaskPriorityCode } from "../../model/taskPriority";
 import TaskStatus, { TaskStatusCode } from "../../model/taskStatus";
 
@@ -65,10 +65,22 @@ export default class MockDb {
       .set(3, mediumPriority)
       .set(5, lowPriority);
 
-    const myTasks = new TaskList(1, { title: "My Tasks" });
-    const lifeList = new TaskList(42, {});
+    const myTasks = new TaskList(1, {
+      title: "My Tasks",
+      color: "0000FF",
+      type: TaskListType.Collection,
+      isDefaultCollection: true,
+    });
+    const lifeList = new TaskList(42, { type: TaskListType.Collection });
     this.taskLists.clear();
-    this.taskLists.set(1, myTasks).set(42, lifeList);
+    this.taskLists
+      .set(2, new TaskList(2, { title: "My Day", type: TaskListType.MyDay }))
+      .set(
+        3,
+        new TaskList(3, { title: "Tomorrow", type: TaskListType.Tomorrow })
+      )
+      .set(1, myTasks)
+      .set(42, lifeList);
 
     this.tasks.clear();
     this.tasks

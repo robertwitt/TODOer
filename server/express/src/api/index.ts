@@ -8,4 +8,5 @@ export {
   setTaskToDone,
   updateTask,
 } from "./task";
+export { getTaskList } from "./taskList";
 export { ping } from "./ping";
