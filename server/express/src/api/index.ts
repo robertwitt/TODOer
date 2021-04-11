@@ -1,2 +1,9 @@
-export { createTask, deleteTask, getTask, getTasks, updateTask } from "./task";
+export {
+  createTask,
+  deleteTask,
+  getTask,
+  getTasks,
+  setTaskToDone,
+  updateTask,
+} from "./task";
 export { ping } from "./ping";

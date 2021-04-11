@@ -193,6 +193,10 @@ export default class TaskService {
     return this.createTaskPayload(task);
   }
 
+  /**
+   * Delete a task with a given ID
+   * @param id a task's ID
+   */
   async deleteTask(id: TaskId): Promise<void> {
     const repository = repositoryFactory.getTaskRepository();
     const task = await repository.findById(id);
@@ -203,5 +207,28 @@ export default class TaskService {
       throw new ApiError(400, `Task ${task.id} cannot be deleted`);
     }
     await repository.deleteById(id);
+  }
+
+  /**
+   * Set a task's status to done
+   * @param id a task's ID
+   */
+  async setTaskToDone(id: TaskId): Promise<void> {
+    const taskRepository = repositoryFactory.getTaskRepository();
+    const task = await taskRepository.findById(id);
+    if (!task) {
+      throw new ApiError(404, `A task with ${id} does not exists`);
+    }
+    if (task.status.code === "D") {
+      return;
+    }
+
+    try {
+      const statusRepository = repositoryFactory.getTaskStatusRepository();
+      task.status = await statusRepository.getOne("D");
+    } catch (error) {
+      throw new ApiError(400, error.message);
+    }
+    await taskRepository.save(task);
   }
 }

@@ -70,6 +70,30 @@ Object {
 }
 `;
 
+exports[`The API server can set a task to done 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-05-31",
+  "dueTime": null,
+  "id": 1,
+  "isDeletable": false,
+  "isPlannedForMyDay": false,
+  "isUpdatable": false,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "D",
+    "name": "done",
+  },
+  "title": "Tax declaration",
+}
+`;
+
 exports[`The API server can update a task 1`] = `
 Object {
   "collection": Object {
@@ -91,5 +115,26 @@ Object {
     "name": "open",
   },
   "title": "Tax declaration",
+}
+`;
+
+exports[`The API server can update status with idempotent calls 1`] = `
+Object {
+  "collection": Object {
+    "id": 42,
+    "title": null,
+  },
+  "dueDate": null,
+  "dueTime": null,
+  "id": 42,
+  "isDeletable": false,
+  "isPlannedForMyDay": false,
+  "isUpdatable": false,
+  "priority": null,
+  "status": Object {
+    "code": "D",
+    "name": "done",
+  },
+  "title": "What is the meaning of life?",
 }
 `;

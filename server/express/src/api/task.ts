@@ -143,3 +143,23 @@ export async function deleteTask(
     next(err);
   }
 }
+
+export async function setTaskToDone(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const taskId = Number(req.params.id);
+  if (!taskId) {
+    next(new ApiError(400, "Task ID is required"));
+  }
+
+  try {
+    const service = new TaskService();
+    await service.setTaskToDone(taskId);
+    res.status(204).send();
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
