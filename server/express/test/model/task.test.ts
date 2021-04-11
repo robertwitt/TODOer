@@ -204,4 +204,16 @@ describe("Updating a Task entity", () => {
     expect(task.priority?.name).toEqual("medium");
     expect(task.isPlannedForMyDay).toBeTruthy();
   });
+
+  it("by setting status to 'done'", () => {
+    const task = new Task(42, {
+      collection: { id: 1 },
+      status: new TaskStatus("O", "open"),
+    });
+    task.status = new TaskStatus("D", "done");
+    expect(task.status.code).toEqual("D");
+    expect(task.status.name).toEqual("done");
+    expect(task.isUpdatable).toBeFalsy();
+    expect(task.isDeletable).toBeFalsy();
+  });
 });

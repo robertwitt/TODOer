@@ -37,7 +37,7 @@ export default class Task extends Entity<TaskId, TaskData> {
   private _collection: TaskListRef;
   private _dueDate?: TaskDueDate;
   private _dueTime?: TaskDueTime;
-  private readonly _status: TaskStatus;
+  private _status: TaskStatus;
   private _priority?: TaskPriority;
   private _isPlannedForMyDay: TaskIsPlannedForMyDay;
 
@@ -130,8 +130,12 @@ export default class Task extends Entity<TaskId, TaskData> {
     return this._status;
   }
 
+  set status(value: TaskStatus) {
+    this._status = value;
+  }
+
   get isUpdatable(): TaskIsUpdatable {
-    return this.status.code === "O";
+    return this.status.code === TaskStatus.open;
   }
 
   get isDeletable(): TaskIsDeletable {

@@ -7,6 +7,19 @@ export class ApiError extends Error {
     return !!(error as any).code;
   }
 
+  static badRequest(error: Error | string): ApiError {
+    return this.get(400, error);
+  }
+
+  static notFound(error: Error | string): ApiError {
+    return this.get(404, error);
+  }
+
+  private static get(code: number, error: Error | string): ApiError {
+    const message = typeof error === "string" ? error : error.message;
+    return new ApiError(code, message);
+  }
+
   readonly code: number;
 
   constructor(code: number, message: string) {

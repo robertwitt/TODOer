@@ -10,7 +10,10 @@ import Task, {
 } from "../model/task";
 import { TaskListId, TaskListTitle } from "../model/taskList";
 import { TaskPriorityCode, TaskPriorityName } from "../model/taskPriority";
-import { TaskStatusCode, TaskStatusName } from "../model/taskStatus";
+import TaskStatus, {
+  TaskStatusCode,
+  TaskStatusName,
+} from "../model/taskStatus";
 import { repositoryFactory } from "../repository";
 import { ApiError } from "./error";
 
@@ -126,7 +129,7 @@ export default class TaskService {
         collection: await listRepository.getOneRef(payload.collection),
         dueDate: payload.dueDate ?? undefined,
         dueTime: payload.dueTime ?? undefined,
-        status: await statusRepository.getOne("O"),
+        status: await statusRepository.getOne(TaskStatus.open),
         priority: payload.priority
           ? await priorityRepository.getOne(payload.priority)
           : undefined,
@@ -134,7 +137,7 @@ export default class TaskService {
       };
       task = taskRepository.create(data);
     } catch (error) {
-      throw new ApiError(400, error.message);
+      throw ApiError.badRequest(error);
     }
 
     task = await taskRepository.save(task);
@@ -157,7 +160,7 @@ export default class TaskService {
       return;
     }
     if (!task.isUpdatable) {
-      throw new ApiError(400, `Task ${task.id} cannot be updated`);
+      throw ApiError.badRequest(`Task ${task.id} cannot be updated`);
     }
 
     try {
@@ -186,22 +189,72 @@ export default class TaskService {
         task.isPlannedForMyDay = payload.isPlannedForMyDay ?? undefined;
       }
     } catch (error) {
-      throw new ApiError(400, error.message);
+      throw ApiError.badRequest(error);
     }
 
     task = await taskRepository.save(task);
     return this.createTaskPayload(task);
   }
 
+  /**
+   * Delete a task with a given ID
+   * @param id a task's ID
+   */
   async deleteTask(id: TaskId): Promise<void> {
     const repository = repositoryFactory.getTaskRepository();
     const task = await repository.findById(id);
     if (!task) {
-      throw new ApiError(404, `A task with ${id} does not exists`);
+      throw ApiError.notFound(`A task with ${id} does not exists`);
     }
     if (!task.isDeletable) {
-      throw new ApiError(400, `Task ${task.id} cannot be deleted`);
+      throw ApiError.badRequest(`Task ${task.id} cannot be deleted`);
     }
     await repository.deleteById(id);
+  }
+
+  /**
+   * Set a task's status to done
+   * @param id a task's ID
+   */
+  async setTaskToDone(id: TaskId): Promise<void> {
+    return this.updateTaskStatus(id, TaskStatus.done);
+  }
+
+  private async updateTaskStatus(
+    id: TaskId,
+    status: TaskStatusCode
+  ): Promise<void> {
+    const taskRepository = repositoryFactory.getTaskRepository();
+    const task = await taskRepository.findById(id);
+    if (!task) {
+      throw ApiError.notFound(`A task with ${id} does not exists`);
+    }
+    if (task.status.code === status) {
+      return;
+    }
+
+    try {
+      const statusRepository = repositoryFactory.getTaskStatusRepository();
+      task.status = await statusRepository.getOne(status);
+    } catch (error) {
+      throw ApiError.badRequest(error);
+    }
+    await taskRepository.save(task);
+  }
+
+  /**
+   * Cancel a task
+   * @param id a task's ID
+   */
+  async cancelTask(id: TaskId): Promise<void> {
+    return this.updateTaskStatus(id, TaskStatus.cancelled);
+  }
+
+  /**
+   * Reopen a task
+   * @param id a task's ID
+   */
+  async reopenTask(id: TaskId): Promise<void> {
+    return this.updateTaskStatus(id, TaskStatus.open);
   }
 }
