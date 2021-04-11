@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The API server can read a single task list by ID 1`] = `
+Object {
+  "color": "0000FF",
+  "id": 1,
+  "isDefaultCollection": true,
+  "isDeletable": true,
+  "isUpdatable": true,
+  "title": "My Tasks",
+  "type": "COLLECTION",
+}
+`;
