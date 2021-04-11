@@ -134,7 +134,7 @@ export default class TaskService {
       };
       task = taskRepository.create(data);
     } catch (error) {
-      throw new ApiError(400, error.message);
+      throw ApiError.badRequest(error);
     }
 
     task = await taskRepository.save(task);
@@ -157,7 +157,7 @@ export default class TaskService {
       return;
     }
     if (!task.isUpdatable) {
-      throw new ApiError(400, `Task ${task.id} cannot be updated`);
+      throw ApiError.badRequest(`Task ${task.id} cannot be updated`);
     }
 
     try {
@@ -186,7 +186,7 @@ export default class TaskService {
         task.isPlannedForMyDay = payload.isPlannedForMyDay ?? undefined;
       }
     } catch (error) {
-      throw new ApiError(400, error.message);
+      throw ApiError.badRequest(error);
     }
 
     task = await taskRepository.save(task);
@@ -201,10 +201,10 @@ export default class TaskService {
     const repository = repositoryFactory.getTaskRepository();
     const task = await repository.findById(id);
     if (!task) {
-      throw new ApiError(404, `A task with ${id} does not exists`);
+      throw ApiError.notFound(`A task with ${id} does not exists`);
     }
     if (!task.isDeletable) {
-      throw new ApiError(400, `Task ${task.id} cannot be deleted`);
+      throw ApiError.badRequest(`Task ${task.id} cannot be deleted`);
     }
     await repository.deleteById(id);
   }
@@ -214,20 +214,27 @@ export default class TaskService {
    * @param id a task's ID
    */
   async setTaskToDone(id: TaskId): Promise<void> {
+    return this.updateTaskStatus(id, "D");
+  }
+
+  private async updateTaskStatus(
+    id: TaskId,
+    status: TaskStatusCode
+  ): Promise<void> {
     const taskRepository = repositoryFactory.getTaskRepository();
     const task = await taskRepository.findById(id);
     if (!task) {
-      throw new ApiError(404, `A task with ${id} does not exists`);
+      throw ApiError.notFound(`A task with ${id} does not exists`);
     }
-    if (task.status.code === "D") {
+    if (task.status.code === status) {
       return;
     }
 
     try {
       const statusRepository = repositoryFactory.getTaskStatusRepository();
-      task.status = await statusRepository.getOne("D");
+      task.status = await statusRepository.getOne(status);
     } catch (error) {
-      throw new ApiError(400, error.message);
+      throw ApiError.badRequest(error);
     }
     await taskRepository.save(task);
   }

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { TaskId } from "../model/task";
 import { ApiError } from "../service/error";
 import TaskService from "../service/task";
 
@@ -15,7 +16,8 @@ export async function getTask(
 ): Promise<void> {
   const taskId = Number(req.params.id);
   if (!taskId) {
-    next(new ApiError(400, "Task ID is required"));
+    next(ApiError.badRequest("Task ID is required"));
+    return;
   }
 
   try {
@@ -65,7 +67,8 @@ export async function createTask(
 ): Promise<void> {
   const body = req.body;
   if (!body.collection) {
-    next(new ApiError(400, "Collection is required"));
+    next(ApiError.badRequest("Collection is required"));
+    return;
   }
 
   try {
@@ -98,7 +101,8 @@ export async function updateTask(
 ): Promise<void> {
   const taskId = Number(req.params.id);
   if (!taskId) {
-    next(new ApiError(400, "Task ID is required"));
+    next(ApiError.badRequest("Task ID is required"));
+    return;
   }
   const body = req.body;
 
@@ -131,7 +135,8 @@ export async function deleteTask(
 ): Promise<void> {
   const taskId = Number(req.params.id);
   if (!taskId) {
-    next(new ApiError(400, "Task ID is required"));
+    next(ApiError.badRequest("Task ID is required"));
+    return;
   }
 
   try {
@@ -144,19 +149,35 @@ export async function deleteTask(
   }
 }
 
+/**
+ * Handler of POST /Tasks/{id}/setToDone
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
 export async function setTaskToDone(
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> {
+  updateTaskStatus(req, res, next, (id, service) => service.setTaskToDone(id));
+}
+
+type UpdateTaskStatusFn = (id: TaskId, service: TaskService) => Promise<void>;
+
+async function updateTaskStatus(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+  updateStatus: UpdateTaskStatusFn
+): Promise<void> {
   const taskId = Number(req.params.id);
   if (!taskId) {
-    next(new ApiError(400, "Task ID is required"));
+    next(ApiError.badRequest("Task ID is required"));
   }
 
   try {
-    const service = new TaskService();
-    await service.setTaskToDone(taskId);
+    await updateStatus(taskId, new TaskService());
     res.status(204).send();
     next();
   } catch (err) {
