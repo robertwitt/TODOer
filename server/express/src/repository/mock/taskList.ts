@@ -21,4 +21,8 @@ export default class TaskListMockRepository
   findById(id: TaskListId): Promise<TaskList | undefined> {
     return Promise.resolve(this.db.taskLists.get(id));
   }
+
+  findAll(): Promise<TaskList[]> {
+    return Promise.resolve(Array.from(this.db.taskLists.values()));
+  }
 }
