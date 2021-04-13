@@ -15,4 +15,9 @@ describe("The API server", () => {
   it("cannot read a task list by an unknown ID", async () => {
     await request.get("/beta/TaskLists/99").expect(404);
   });
+
+  it("can find all task lists", async () => {
+    const { body } = await request.get("/beta/TaskLists").expect(200);
+    expect(body).toMatchSnapshot();
+  });
 });
