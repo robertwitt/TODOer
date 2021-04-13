@@ -168,6 +168,17 @@ paths:
           description: No Content
         "404":
           description: Not Found
+  /TaskLists:
+    get:
+      operationId: getTaskLists
+      summary: Get a list of task lists
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
   /TaskLists/{id}:
     get:
       operationId: getTaskList

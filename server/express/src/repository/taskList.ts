@@ -24,4 +24,10 @@ export interface TaskListRepository {
    * @returns optional TaskList entity
    */
   findById(id: TaskListId): Promise<TaskList | undefined>;
+
+  /**
+   * Get a list of task lists
+   * @returns array of TaskList entities
+   */
+  findAll(): Promise<TaskList[]>;
 }

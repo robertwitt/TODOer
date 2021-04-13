@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`The API server can find all task lists 1`] = `
+Object {
+  "value": Array [
+    Object {
+      "color": null,
+      "id": 2,
+      "isDefaultCollection": false,
+      "isDeletable": false,
+      "isUpdatable": false,
+      "title": "My Day",
+      "type": "MY_DAY",
+    },
+    Object {
+      "color": null,
+      "id": 3,
+      "isDefaultCollection": false,
+      "isDeletable": false,
+      "isUpdatable": false,
+      "title": "Tomorrow",
+      "type": "TOMORROW",
+    },
+    Object {
+      "color": "0000FF",
+      "id": 1,
+      "isDefaultCollection": true,
+      "isDeletable": true,
+      "isUpdatable": true,
+      "title": "My Tasks",
+      "type": "COLLECTION",
+    },
+    Object {
+      "color": null,
+      "id": 42,
+      "isDefaultCollection": false,
+      "isDeletable": true,
+      "isUpdatable": true,
+      "title": null,
+      "type": "COLLECTION",
+    },
+  ],
+}
+`;
+
 exports[`The API server can read a single task list by ID 1`] = `
 Object {
   "color": "0000FF",
