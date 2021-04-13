@@ -49,4 +49,12 @@ export default class TaskListService {
       isDefaultCollection: model.isDefaultCollection,
     };
   }
+
+  async findTaskLists(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    params: Record<string, never> = {}
+  ): Promise<TaskListPayload[]> {
+    const repository = repositoryFactory.getTaskListRepository();
+    return (await repository.findAll()).map(this.createTaskListPayload);
+  }
 }
