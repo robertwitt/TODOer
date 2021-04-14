@@ -67,20 +67,11 @@ export type TaskUpdatePayload = {
  */
 export default class TaskService {
   /**
-   * Get a single task by ID
-   * @param id a task's ID
-   * @returns Task entity
+   * Create a payload representation of a task
+   * @param model a Task entity
+   * @returns payload of the Task
    */
-  async getTask(id: TaskId): Promise<TaskPayload> {
-    const repository = repositoryFactory.getTaskRepository();
-    const task = await repository.findById(id);
-    if (!task) {
-      throw ApiError.notFound(`A task with ID ${id} does not exist`);
-    }
-    return this.createTaskPayload(task);
-  }
-
-  private createTaskPayload(model: Task): TaskPayload {
+  static createTaskPayload(model: Task): TaskPayload {
     return {
       id: model.id,
       title: model.title ?? null,
@@ -104,6 +95,20 @@ export default class TaskService {
   }
 
   /**
+   * Get a single task by ID
+   * @param id a task's ID
+   * @returns Task entity
+   */
+  async getTask(id: TaskId): Promise<TaskPayload> {
+    const repository = repositoryFactory.getTaskRepository();
+    const task = await repository.findById(id);
+    if (!task) {
+      throw ApiError.notFound(`A task with ID ${id} does not exist`);
+    }
+    return TaskService.createTaskPayload(task);
+  }
+
+  /**
    * Find tasks and return as array
    * @param params optional parameters
    * @returns
@@ -116,7 +121,7 @@ export default class TaskService {
     const tasks = collection
       ? repository.findAllByCollection(collection)
       : repository.findAll();
-    return (await tasks).map(this.createTaskPayload);
+    return (await tasks).map(TaskService.createTaskPayload);
   }
 
   /**
@@ -148,7 +153,7 @@ export default class TaskService {
     }
 
     task = await taskRepository.save(task);
-    return this.createTaskPayload(task);
+    return TaskService.createTaskPayload(task);
   }
 
   private async getTaskCollectionRef(id: TaskListId): Promise<TaskListRef> {
@@ -207,7 +212,7 @@ export default class TaskService {
     }
 
     task = await taskRepository.save(task);
-    return this.createTaskPayload(task);
+    return TaskService.createTaskPayload(task);
   }
 
   /**
