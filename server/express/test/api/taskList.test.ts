@@ -20,4 +20,18 @@ describe("The API server", () => {
     const { body } = await request.get("/beta/TaskLists").expect(200);
     expect(body).toMatchSnapshot();
   });
+
+  it("can read a single task list with all its tasks", async () => {
+    const { body } = await request
+      .get("/beta/TaskLists/1/assignedTasks")
+      .expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("can read the My Day view with all its tasks", async () => {
+    const { body } = await request
+      .get("/beta/TaskLists/2/assignedTasks")
+      .expect(200);
+    expect(body).toMatchSnapshot();
+  });
 });
