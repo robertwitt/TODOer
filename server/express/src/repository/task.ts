@@ -1,4 +1,9 @@
-import Task, { TaskData, TaskId } from "../model/task";
+import Task, {
+  TaskData,
+  TaskDueDate,
+  TaskId,
+  TaskIsPlannedForMyDay,
+} from "../model/task";
 import { TaskListId } from "../model/taskList";
 
 /**
@@ -31,6 +36,17 @@ export interface TaskRepository {
    * @returns list of Task entities
    */
   findAllByCollection(collection: TaskListId): Promise<Task[]>;
+
+  /**
+   * Get all tasks with a specific due date
+   * @param dueDate due date
+   * @param isPlannedForMyDay optional flag
+   * @returns list of Task entities
+   */
+  findAllByDueDate(
+    dueDate: TaskDueDate,
+    isPlannedForMyDay?: TaskIsPlannedForMyDay
+  ): Promise<Task[]>;
 
   /**
    * Create a new Task entity container with specified data

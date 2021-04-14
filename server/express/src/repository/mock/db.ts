@@ -101,6 +101,7 @@ export default class MockDb {
           collection: myTasks.ref,
           status: openStatus,
           priority: lowPriority,
+          isPlannedForMyDay: true,
         })
       )
       .set(
