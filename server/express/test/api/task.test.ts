@@ -53,6 +53,10 @@ describe("The API server", () => {
     await request.post("/beta/Tasks").send({ title: "new task" }).expect(400);
   });
 
+  it("fails creating a task for a task list view", async () => {
+    await request.post("/beta/Tasks").send({ title: "new task", collection: 2 }).expect(400);
+  });
+
   it("can update a task", async () => {
     const { body } = await request
       .patch("/beta/Tasks/1")

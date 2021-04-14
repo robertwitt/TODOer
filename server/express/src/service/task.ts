@@ -8,7 +8,12 @@ import Task, {
   TaskIsUpdatable,
   TaskTitle,
 } from "../model/task";
-import { TaskListId, TaskListTitle } from "../model/taskList";
+import {
+  TaskListId,
+  TaskListRef,
+  TaskListTitle,
+  TaskListType,
+} from "../model/taskList";
 import { TaskPriorityCode, TaskPriorityName } from "../model/taskPriority";
 import TaskStatus, {
   TaskStatusCode,
@@ -120,7 +125,6 @@ export default class TaskService {
    * @returns created task
    */
   async createTask(payload: TaskCreatePayload): Promise<TaskPayload> {
-    const listRepository = repositoryFactory.getTaskListRepository();
     const statusRepository = repositoryFactory.getTaskStatusRepository();
     const priorityRepository = repositoryFactory.getTaskPriorityRepository();
     const taskRepository = repositoryFactory.getTaskRepository();
@@ -129,7 +133,7 @@ export default class TaskService {
     try {
       const data: TaskData = {
         title: payload.title ?? undefined,
-        collection: await listRepository.getOneRef(payload.collection),
+        collection: await this.getTaskCollectionRef(payload.collection),
         dueDate: payload.dueDate ?? undefined,
         dueTime: payload.dueTime ?? undefined,
         status: await statusRepository.getOne(TaskStatus.open),
@@ -145,6 +149,15 @@ export default class TaskService {
 
     task = await taskRepository.save(task);
     return this.createTaskPayload(task);
+  }
+
+  private async getTaskCollectionRef(id: TaskListId): Promise<TaskListRef> {
+    const repository = repositoryFactory.getTaskListRepository();
+    const list = await repository.getOne(id);
+    if (list.type !== TaskListType.Collection) {
+      throw ApiError.badRequest(`Task list ${id} is not a collection`);
+    }
+    return list.ref;
   }
 
   /**
@@ -171,9 +184,7 @@ export default class TaskService {
         task.title = payload.title ?? undefined;
       }
       if (payload.collection !== undefined) {
-        task.collection = await repositoryFactory
-          .getTaskListRepository()
-          .getOneRef(payload.collection);
+        task.collection = await this.getTaskCollectionRef(payload.collection);
       }
       if (payload.dueDate !== undefined) {
         task.dueDate = payload.dueDate ?? undefined;
