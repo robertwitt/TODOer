@@ -54,3 +54,88 @@ Object {
   "type": "COLLECTION",
 }
 `;
+
+exports[`The API server can read a single task list with all its tasks 1`] = `
+Object {
+  "assignedTasks": Array [
+    Object {
+      "collection": Object {
+        "id": 1,
+        "title": "My Tasks",
+      },
+      "dueDate": "2021-05-31",
+      "dueTime": null,
+      "id": 1,
+      "isDeletable": true,
+      "isPlannedForMyDay": false,
+      "isUpdatable": true,
+      "priority": Object {
+        "code": 5,
+        "name": "low",
+      },
+      "status": Object {
+        "code": "O",
+        "name": "open",
+      },
+      "title": "Tax declaration",
+    },
+    Object {
+      "collection": Object {
+        "id": 1,
+        "title": "My Tasks",
+      },
+      "dueDate": null,
+      "dueTime": null,
+      "id": 2,
+      "isDeletable": true,
+      "isPlannedForMyDay": true,
+      "isUpdatable": true,
+      "priority": Object {
+        "code": 5,
+        "name": "low",
+      },
+      "status": Object {
+        "code": "O",
+        "name": "open",
+      },
+      "title": "Groceries shopping",
+    },
+  ],
+  "color": "0000FF",
+  "id": 1,
+  "title": "My Tasks",
+  "type": "COLLECTION",
+}
+`;
+
+exports[`The API server can read the My Day view with all its tasks 1`] = `
+Object {
+  "assignedTasks": Array [
+    Object {
+      "collection": Object {
+        "id": 1,
+        "title": "My Tasks",
+      },
+      "dueDate": null,
+      "dueTime": null,
+      "id": 2,
+      "isDeletable": true,
+      "isPlannedForMyDay": true,
+      "isUpdatable": true,
+      "priority": Object {
+        "code": 5,
+        "name": "low",
+      },
+      "status": Object {
+        "code": "O",
+        "name": "open",
+      },
+      "title": "Groceries shopping",
+    },
+  ],
+  "color": null,
+  "id": 2,
+  "title": "My Day",
+  "type": "MY_DAY",
+}
+`;

@@ -15,6 +15,10 @@ export class ApiError extends Error {
     return this.get(404, error);
   }
 
+  static serverError(error: Error | string): ApiError {
+    return this.get(500, error);
+  }
+
   private static get(code: number, error: Error | string): ApiError {
     const message = typeof error === "string" ? error : error.message;
     return new ApiError(code, message);

@@ -1,4 +1,9 @@
-import Task, { TaskData, TaskId } from "../../model/task";
+import Task, {
+  TaskData,
+  TaskDueDate,
+  TaskId,
+  TaskIsPlannedForMyDay,
+} from "../../model/task";
 import { TaskRepository } from "../task";
 import { AbstractMockRepository } from "./abstract";
 
@@ -43,6 +48,31 @@ export default class TaskMockRepository
       .sort(this.sortTasks)
       .map((task) => this.copyTask(task));
     return Promise.resolve(tasks);
+  }
+
+  findAllByDueDate(
+    dueDate: TaskDueDate,
+    isPlannedForMyDay?: TaskIsPlannedForMyDay
+  ): Promise<Task[]> {
+    const tasks = Array.from(this.db.tasks.values())
+      .filter(
+        (task) =>
+          task.dueDate === dueDate ||
+          this.isTaskPlannedForMyDay(task, isPlannedForMyDay)
+      )
+      .sort(this.sortTasks)
+      .map((task) => this.copyTask(task));
+    return Promise.resolve(tasks);
+  }
+
+  private isTaskPlannedForMyDay(
+    task: Task,
+    isPlannedForMyDay: TaskIsPlannedForMyDay | undefined
+  ): boolean {
+    return (
+      isPlannedForMyDay !== undefined &&
+      task.isPlannedForMyDay === isPlannedForMyDay
+    );
   }
 
   create(data: TaskData): Task {

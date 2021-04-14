@@ -8,7 +8,12 @@ import Task, {
   TaskIsUpdatable,
   TaskTitle,
 } from "../model/task";
-import { TaskListId, TaskListTitle } from "../model/taskList";
+import {
+  TaskListId,
+  TaskListRef,
+  TaskListTitle,
+  TaskListType,
+} from "../model/taskList";
 import { TaskPriorityCode, TaskPriorityName } from "../model/taskPriority";
 import TaskStatus, {
   TaskStatusCode,
@@ -62,20 +67,11 @@ export type TaskUpdatePayload = {
  */
 export default class TaskService {
   /**
-   * Get a single task by ID
-   * @param id a task's ID
-   * @returns Task entity
+   * Create a payload representation of a task
+   * @param model a Task entity
+   * @returns payload of the Task
    */
-  async getTask(id: TaskId): Promise<TaskPayload> {
-    const repository = repositoryFactory.getTaskRepository();
-    const task = await repository.findById(id);
-    if (!task) {
-      throw ApiError.notFound(`A task with ID ${id} does not exist`);
-    }
-    return this.createTaskPayload(task);
-  }
-
-  private createTaskPayload(model: Task): TaskPayload {
+  static createTaskPayload(model: Task): TaskPayload {
     return {
       id: model.id,
       title: model.title ?? null,
@@ -99,6 +95,20 @@ export default class TaskService {
   }
 
   /**
+   * Get a single task by ID
+   * @param id a task's ID
+   * @returns Task entity
+   */
+  async getTask(id: TaskId): Promise<TaskPayload> {
+    const repository = repositoryFactory.getTaskRepository();
+    const task = await repository.findById(id);
+    if (!task) {
+      throw ApiError.notFound(`A task with ID ${id} does not exist`);
+    }
+    return TaskService.createTaskPayload(task);
+  }
+
+  /**
    * Find tasks and return as array
    * @param params optional parameters
    * @returns
@@ -111,7 +121,7 @@ export default class TaskService {
     const tasks = collection
       ? repository.findAllByCollection(collection)
       : repository.findAll();
-    return (await tasks).map(this.createTaskPayload);
+    return (await tasks).map(TaskService.createTaskPayload);
   }
 
   /**
@@ -120,7 +130,6 @@ export default class TaskService {
    * @returns created task
    */
   async createTask(payload: TaskCreatePayload): Promise<TaskPayload> {
-    const listRepository = repositoryFactory.getTaskListRepository();
     const statusRepository = repositoryFactory.getTaskStatusRepository();
     const priorityRepository = repositoryFactory.getTaskPriorityRepository();
     const taskRepository = repositoryFactory.getTaskRepository();
@@ -129,7 +138,7 @@ export default class TaskService {
     try {
       const data: TaskData = {
         title: payload.title ?? undefined,
-        collection: await listRepository.getOneRef(payload.collection),
+        collection: await this.getTaskCollectionRef(payload.collection),
         dueDate: payload.dueDate ?? undefined,
         dueTime: payload.dueTime ?? undefined,
         status: await statusRepository.getOne(TaskStatus.open),
@@ -144,7 +153,16 @@ export default class TaskService {
     }
 
     task = await taskRepository.save(task);
-    return this.createTaskPayload(task);
+    return TaskService.createTaskPayload(task);
+  }
+
+  private async getTaskCollectionRef(id: TaskListId): Promise<TaskListRef> {
+    const repository = repositoryFactory.getTaskListRepository();
+    const list = await repository.getOne(id);
+    if (list.type !== TaskListType.Collection) {
+      throw ApiError.badRequest(`Task list ${id} is not a collection`);
+    }
+    return list.ref;
   }
 
   /**
@@ -171,9 +189,7 @@ export default class TaskService {
         task.title = payload.title ?? undefined;
       }
       if (payload.collection !== undefined) {
-        task.collection = await repositoryFactory
-          .getTaskListRepository()
-          .getOneRef(payload.collection);
+        task.collection = await this.getTaskCollectionRef(payload.collection);
       }
       if (payload.dueDate !== undefined) {
         task.dueDate = payload.dueDate ?? undefined;
@@ -196,7 +212,7 @@ export default class TaskService {
     }
 
     task = await taskRepository.save(task);
-    return this.createTaskPayload(task);
+    return TaskService.createTaskPayload(task);
   }
 
   /**

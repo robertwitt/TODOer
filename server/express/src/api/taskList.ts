@@ -48,3 +48,30 @@ export async function getTaskLists(
     next(err);
   }
 }
+
+/**
+ * Handler of GET /TaskLists/{id}/assignedTasks
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function getTaskListWithTasks(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const listId = Number(req.params.id);
+  if (!listId) {
+    next(ApiError.badRequest("Task ID is required"));
+    return;
+  }
+
+  try {
+    const service = new TaskListService();
+    const list = await service.getTaskListWithTasks(listId);
+    res.json(list);
+    next();
+  } catch (err) {
+    next(err);
+  }
+}

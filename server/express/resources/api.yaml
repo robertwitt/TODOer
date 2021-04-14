@@ -178,7 +178,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TaskList"
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TaskList"
   /TaskLists/{id}:
     get:
       operationId: getTaskList
@@ -197,6 +202,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TaskList"
+        "404":
+          description: Not Found
+  /TaskLists/{id}/assignedTasks:
+    get:
+      operationId: getTaskListWithTasks
+      summary: Get a task list with all assigned tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskListWithTasks"
         "404":
           description: Not Found
 
@@ -347,3 +372,89 @@ components:
         - isUpdatable
         - isDeletable
         - isDefaultCollection
+    TaskListWithTasks:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
+        type:
+          type: string
+          enum:
+            - COLLECTION
+            - MY_DAY
+            - TOMORROW
+        assignedTasks:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              title:
+                type: string
+                maxLength: 40
+              collection:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  title:
+                    type: string
+                    maxLength: 40
+                required:
+                  - id
+              dueDate:
+                type: string
+                format: date
+              dueTime:
+                type: string
+                maxLength: 8
+              status:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    maxLength: 1
+                  name:
+                    type: string
+                    maxLength: 40
+                required:
+                  - code
+              isUpdatable:
+                type: boolean
+              isDeletable:
+                type: boolean
+              priority:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  name:
+                    type: string
+                    maxLength: 40
+                required:
+                  - code
+              isPlannedForMyDay:
+                type: boolean
+            required:
+              - id
+              - collection
+              - status
+              - isUpdatable
+              - isDeletable
+              - isPlannedForMyDay
+      required:
+        - id
+        - type
+        - assignedTasks
