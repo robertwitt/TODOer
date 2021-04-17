@@ -75,3 +75,23 @@ export async function getTaskListWithTasks(
     next(err);
   }
 }
+
+/**
+ * Handler of POST /TaskLists
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function createTaskList(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const list = await new TaskListService().createTaskList(req.body);
+    res.status(201).json(list);
+    next();
+  } catch (err) {
+    next(err);
+  }
+}

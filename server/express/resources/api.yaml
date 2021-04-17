@@ -184,6 +184,22 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/TaskList"
+    post:
+      operationId: createTaskList
+      summary: Create a new task list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskList-create"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
   /TaskLists/{id}:
     get:
       operationId: getTaskList
@@ -458,3 +474,15 @@ components:
         - id
         - type
         - assignedTasks
+    TaskList-create:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
+        isDefaultCollection:
+          type: boolean
