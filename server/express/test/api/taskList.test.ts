@@ -34,4 +34,31 @@ describe("The API server", () => {
       .expect(200);
     expect(body).toMatchSnapshot();
   });
+
+  it("can create a new task list", async () => {
+    const { body } = await request
+      .post("/beta/TaskLists")
+      .send({
+        title: "new list",
+        color: "92FA4E",
+      })
+      .expect(201);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("can create a new task list as default", async () => {
+    await request
+      .post("/beta/TaskLists")
+      .send({
+        title: "new list",
+        isDefaultCollection: true,
+      })
+      .expect(201);
+    const { body } = await request.get("/beta/TaskLists").expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("cannot create a task list with invalid", async () => {
+    await request.post("/beta/TaskLists").send({ color: "WDR392" }).expect(400);
+  });
 });
