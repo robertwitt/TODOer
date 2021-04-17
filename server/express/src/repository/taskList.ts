@@ -1,4 +1,4 @@
-import TaskList, { TaskListId } from "../model/taskList";
+import TaskList, { TaskListData, TaskListId } from "../model/taskList";
 
 /**
  * Repository to managed TaskList entities
@@ -23,4 +23,18 @@ export interface TaskListRepository {
    * @returns array of TaskList entities
    */
   findAll(): Promise<TaskList[]>;
+
+  /**
+   * Create a new TaskList container entity
+   * @param data task list data
+   * @returns TaskList entity
+   */
+  create(data: TaskListData): TaskList;
+
+  /**
+   * Save a TaskList in the repository
+   * @param taskList TaskList entity
+   * @return saved TaskList entity
+   */
+  save(taskList: TaskList): Promise<TaskList>;
 }
