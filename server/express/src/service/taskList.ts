@@ -1,6 +1,7 @@
 import Task from "../model/task";
 import TaskList, {
   TaskListColor,
+  TaskListData,
   TaskListId,
   TaskListIsDefaultCollection,
   TaskListIsDeletable,
@@ -28,6 +29,12 @@ export type TaskListWithTasksPayload = {
   color: TaskListColor | null;
   type: TaskListType;
   assignedTasks: TaskPayload[];
+};
+
+export type TaskListCreatePayload = {
+  title?: TaskListTitle | null;
+  color?: TaskListColor | null;
+  isDefaultCollection?: TaskListIsDefaultCollection;
 };
 
 /**
@@ -113,5 +120,26 @@ export default class TaskListService {
     return (await repository.findAll()).map(
       TaskListService.createTaskListPayload
     );
+  }
+
+  async createTaskList(
+    payload: TaskListCreatePayload
+  ): Promise<TaskListPayload> {
+    const repository = repositoryFactory.getTaskListRepository();
+    let taskList: TaskList;
+    try {
+      const data: TaskListData = {
+        title: payload.title ?? undefined,
+        color: payload.color ?? undefined,
+        type: TaskListType.Collection,
+        isDefaultCollection: payload.isDefaultCollection,
+      };
+      taskList = repository.create(data);
+    } catch (error) {
+      throw ApiError.badRequest(error);
+    }
+
+    taskList = await repository.save(taskList);
+    return TaskListService.createTaskListPayload(taskList);
   }
 }
