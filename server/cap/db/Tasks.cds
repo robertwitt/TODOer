@@ -1,15 +1,18 @@
 namespace db;
 
-using {cuid} from '@sap/cds/common';
+using {
+  cuid,
+  managed
+} from '@sap/cds/common';
 using {db.TaskCollections} from './TaskCollections';
-using {db.TaskPriorityCode} from './TaskPriorityCodes';
-using {db.TaskStatusCode} from './TaskStatusCodes';
+using {db.TaskPriority} from './TaskPriorities';
+using {db.TaskStatus} from './TaskStatuses';
 
-entity Tasks : cuid {
+entity Tasks : cuid, managed {
   title             : String(40);
   collection        : Association to one TaskCollections not null;
-  status            : TaskStatusCode not null;
-  priority          : TaskPriorityCode;
+  status            : TaskStatus not null;
+  priority          : TaskPriority;
   dueDate           : Date;
   dueTime           : Time;
   isPlannedForMyDay : Boolean not null;

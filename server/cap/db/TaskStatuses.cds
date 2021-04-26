@@ -2,8 +2,8 @@ namespace db;
 
 using {sap.common.CodeList} from '@sap/cds/common';
 
-entity TaskStatusCodes : CodeList {
+entity TaskStatuses : CodeList {
   key code : String(1);
 }
 
-type TaskStatusCode : Association to one TaskStatusCodes;
+type TaskStatus : Association to one TaskStatuses;
