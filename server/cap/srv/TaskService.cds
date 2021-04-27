@@ -19,11 +19,11 @@ service TaskService {
     createdBy,
     modifiedAt,
     modifiedBy
+  } actions {
+    action setToDone();
+    action cancel();
+    action reopen();
   }
-
-  action setTaskToDone(taskID : UUID);
-  action cancelTask(taskID : UUID);
-  action reopenTask(taskID : UUID);
 
   @readonly
   entity Statuses    as projection on db.TaskStatuses excluding {
