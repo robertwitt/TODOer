@@ -53,7 +53,7 @@ describe("Task Collections", () => {
     });
   });
 
-  it.skip("can be created", async () => {
+  it("can be created", async () => {
     const { status, data } = await POST("/task/Collections", {
       title: "New list",
       color: "00ff00",
@@ -66,7 +66,7 @@ describe("Task Collections", () => {
     });
   });
 
-  it.skip("cannot be created with invalid color", async () => {
+  it("cannot be created with invalid color", async () => {
     const { status } = await POST("/task/Collections", {
       title: "New list",
       color: "GH01XY",
