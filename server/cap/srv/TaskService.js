@@ -12,6 +12,7 @@ class TaskService extends cds.ApplicationService {
       this.validateCollectionColor
     );
     this.before("CREATE", "Collections", this.setCollectionDefaults);
+    this.before("DELETE", "Collections", this.forbidDeletingDefaultCollection);
     this.on(["CREATE", "UPDATE"], "Collections", this.changeDefaultCollection);
     await super.init();
   }
@@ -33,6 +34,20 @@ class TaskService extends cds.ApplicationService {
     if (!req.data) return;
     const data = req.data;
     data.isDefault = data.isDefault || false;
+  }
+
+  async forbidDeletingDefaultCollection(req) {
+    if (!req.data) return;
+    const id = req.data.ID;
+    const collection = await this.tx(req).run(
+      SELECT.from("Collections", id, (c) => c.isDefault)
+    );
+    if (collection && collection.isDefault) {
+      req.reject(
+        400,
+        `Collection '${id}' is the default collection and must not be deleted`
+      );
+    }
   }
 
   async changeDefaultCollection(req, next) {

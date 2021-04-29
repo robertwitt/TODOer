@@ -153,7 +153,7 @@ describe("Task Collections", () => {
     expect(status).to.equal(204);
   });
 
-  it.skip("cannot be deleted with default flag", async () => {
+  it("cannot be deleted with default flag", async () => {
     const {
       status,
       data,
