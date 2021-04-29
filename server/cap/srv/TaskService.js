@@ -6,24 +6,45 @@ const { ColorSpecification } = require("../specification/color");
  */
 class TaskService extends cds.ApplicationService {
   async init() {
-    this.before("CREATE", "Collections", this.beforeCreateCollection);
+    this.before(
+      ["CREATE", "UPDATE"],
+      "Collections",
+      this.validateCollectionColor
+    );
+    this.before("CREATE", "Collections", this.setCollectionDefaults);
+    this.on(["CREATE", "UPDATE"], "Collections", this.changeDefaultCollection);
     await super.init();
   }
 
-  beforeCreateCollection(req) {
-    const data = req.data;
+  validateCollectionColor(req) {
+    if (!req.data) return;
 
-    if (!this._isValidColor(data.color)) {
-      req.reject(400, `Value '${data.color}' is not a valid color`);
+    const color = req.data.color;
+    if (!color) return;
+
+    if (!new ColorSpecification().isValid(color)) {
+      req.reject(400, `Value '${color}' is not a valid color`);
       return;
     }
+    req.data.color = color.toUpperCase();
+  }
 
-    data.color = data.color.toUpperCase();
+  setCollectionDefaults(req) {
+    if (!req.data) return;
+    const data = req.data;
     data.isDefault = data.isDefault || false;
   }
 
-  _isValidColor(color) {
-    return color ? new ColorSpecification().isValid(color) : true;
+  async changeDefaultCollection(req, next) {
+    const collection = await next(req);
+
+    if (req.data && req.data.isDefault && collection.isDefault) {
+      await this.tx(req).run(
+        UPDATE`Collections`.set`isDefault = false`.where`ID != ${collection.ID}`
+      );
+    }
+
+    return collection;
   }
 }
 
