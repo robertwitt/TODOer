@@ -53,7 +53,7 @@ describe("Task Collections", () => {
     });
   });
 
-  it.skip("can be created", async () => {
+  it("can be created", async () => {
     const { status, data } = await POST("/task/Collections", {
       title: "New list",
       color: "00ff00",
@@ -66,7 +66,7 @@ describe("Task Collections", () => {
     });
   });
 
-  it.skip("cannot be created with invalid color", async () => {
+  it("cannot be created with invalid color", async () => {
     const { status } = await POST("/task/Collections", {
       title: "New list",
       color: "GH01XY",
@@ -75,7 +75,7 @@ describe("Task Collections", () => {
     expect(status).to.equal(400);
   });
 
-  it.skip("can be created with default flag", async () => {
+  it("can be created with default flag", async () => {
     let res = await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
     expect(res.status).to.equal(200);
     expect(res.data.value.length).to.equal(1);
@@ -97,7 +97,7 @@ describe("Task Collections", () => {
     expect(res.data.value.length).to.equal(1);
   });
 
-  it.skip("can be updated", async () => {
+  it("can be updated", async () => {
     const { status, data } = await PATCH(
       "/task/Collections/00000000-0000-0000-0000-000000000003",
       {
@@ -114,7 +114,7 @@ describe("Task Collections", () => {
     });
   });
 
-  it.skip("cannot be updated with invalid color", async () => {
+  it("cannot be updated with invalid color", async () => {
     const { status } = await PATCH(
       "/task/Collections/00000000-0000-0000-0000-000000000003",
       {
@@ -124,7 +124,7 @@ describe("Task Collections", () => {
     expect(status).to.equal(400);
   });
 
-  it.skip("can be updated with default flag", async () => {
+  it("can be updated with default flag", async () => {
     let res = await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
     expect(res.status).to.equal(200);
     expect(res.data.value.length).to.equal(1);
@@ -153,7 +153,7 @@ describe("Task Collections", () => {
     expect(status).to.equal(204);
   });
 
-  it.skip("cannot be deleted with default flag", async () => {
+  it("cannot be deleted with default flag", async () => {
     const {
       status,
       data,
@@ -167,10 +167,10 @@ describe("Task Collections", () => {
     expect(deleteStatus).to.equal(400);
   });
 
-  it.skip("cannot be deleted with tasks assigned", async () => {
+  it("cannot be deleted with tasks assigned", async () => {
     const {
       status,
     } = await DEL`/task/Collections/00000000-0000-0000-0000-000000000002`;
-    expect(status).to.equal(409);
+    expect(status).to.equal(400);
   });
 });
