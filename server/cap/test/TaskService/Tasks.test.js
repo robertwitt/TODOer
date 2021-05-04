@@ -76,7 +76,7 @@ describe("Tasks", () => {
     });
   });
 
-  it.skip("can be created", async () => {
+  it("can be created", async () => {
     const { status, data } = await POST("/task/Tasks", {
       title: "New task",
       collection: { ID: "00000000-0000-0000-0000-000000000001" },
@@ -84,7 +84,7 @@ describe("Tasks", () => {
       dueDate: "2021-04-27",
     });
     expect(status).to.equal(201);
-    expect(data).to.include({
+    expect(data).to.deep.include({
       title: "New task",
       collection: { ID: "00000000-0000-0000-0000-000000000001" },
       status: { code: "O" },

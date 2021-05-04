@@ -14,6 +14,7 @@ class TaskService extends cds.ApplicationService {
     this.before("CREATE", "Collections", this.setCollectionDefaults);
     this.before("DELETE", "Collections", this.forbidDeletingDefaultCollection);
     this.on(["CREATE", "UPDATE"], "Collections", this.changeDefaultCollection);
+    this.before("CREATE", "Tasks", this.setTaskDefaults);
     await super.init();
   }
 
@@ -60,6 +61,13 @@ class TaskService extends cds.ApplicationService {
     }
 
     return collection;
+  }
+
+  setTaskDefaults(req) {
+    if (!req.data) return;
+    const data = req.data;
+    data.status_code = "O";
+    data.isPlannedForMyDay = data.isPlannedForMyDay || false;
   }
 }
 
