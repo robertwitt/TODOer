@@ -76,7 +76,7 @@ describe("Tasks", () => {
     });
   });
 
-  it.skip("can be created", async () => {
+  it("can be created", async () => {
     const { status, data } = await POST("/task/Tasks", {
       title: "New task",
       collection: { ID: "00000000-0000-0000-0000-000000000001" },
@@ -84,7 +84,7 @@ describe("Tasks", () => {
       dueDate: "2021-04-27",
     });
     expect(status).to.equal(201);
-    expect(data).to.include({
+    expect(data).to.deep.include({
       title: "New task",
       collection: { ID: "00000000-0000-0000-0000-000000000001" },
       status: { code: "O" },
@@ -125,7 +125,7 @@ describe("Tasks", () => {
     });
   });
 
-  it.skip("cannot be updated with due time but without date", async () => {
+  it("cannot be updated with due time but without date", async () => {
     const { status } = await PATCH(
       "/task/Tasks/00000000-0000-0000-0000-00000000000B",
       {
@@ -136,7 +136,7 @@ describe("Tasks", () => {
     expect(status).to.equal(400);
   });
 
-  it.skip("cannot be updated without due date when time was set", async () => {
+  it("cannot be updated without due date when time was set", async () => {
     const { status } = await PATCH(
       "/task/Tasks/00000000-0000-0000-0000-00000000000D",
       {
@@ -146,7 +146,7 @@ describe("Tasks", () => {
     expect(status).to.equal(400);
   });
 
-  it.skip("cannot be updated with due time when date was not set", async () => {
+  it("cannot be updated with due time when date was not set", async () => {
     const { status } = await PATCH(
       "/task/Tasks/00000000-0000-0000-0000-00000000000B",
       {
@@ -156,7 +156,7 @@ describe("Tasks", () => {
     expect(status).to.equal(400);
   });
 
-  it.skip("cannot updated when done", async () => {
+  it("cannot updated when done", async () => {
     const { status } = await PATCH(
       "/task/Tasks/00000000-0000-0000-0000-00000000000C",
       {
@@ -173,16 +173,16 @@ describe("Tasks", () => {
     expect(status).to.equal(204);
   });
 
-  it.skip("cannot be deleted when done", async () => {
+  it("cannot be deleted when done", async () => {
     const {
       status,
     } = await DEL`/task/Tasks/00000000-0000-0000-0000-00000000000C`;
     expect(status).to.equal(400);
   });
 
-  it.skip("can be set to done", async () => {
+  it("can be set to done", async () => {
     const { status } = await POST(
-      "/task/Tasks/00000000-0000-0000-0000-00000000000F/setToDone()",
+      "/task/Tasks/00000000-0000-0000-0000-00000000000F/TaskService.setToDone",
       {}
     );
     expect(status).to.equal(204);
@@ -195,32 +195,32 @@ describe("Tasks", () => {
     });
   });
 
-  it.skip("can be cancelled", async () => {
+  it("can be cancelled", async () => {
     const { status } = await POST(
-      "/task/Tasks/00000000-0000-0000-0000-00000000000G/cancel()",
+      "/task/Tasks/00000000-0000-0000-0000-0000000000AA/TaskService.cancel",
       {}
     );
     expect(status).to.equal(204);
     const {
       data,
-    } = await GET`/task/Tasks/00000000-0000-0000-0000-00000000000G`;
+    } = await GET`/task/Tasks/00000000-0000-0000-0000-0000000000AA`;
     expect(data).to.deep.include({
-      ID: "00000000-0000-0000-0000-00000000000G",
+      ID: "00000000-0000-0000-0000-0000000000AA",
       status: { code: "X" },
     });
   });
 
-  it.skip("can be reopened", async () => {
+  it("can be reopened", async () => {
     const { status } = await POST(
-      "/task/Tasks/00000000-0000-0000-0000-00000000000H/reopen()",
+      "/task/Tasks/00000000-0000-0000-0000-0000000000AB/TaskService.reopen",
       {}
     );
     expect(status).to.equal(204);
     const {
       data,
-    } = await GET`/task/Tasks/00000000-0000-0000-0000-00000000000H`;
+    } = await GET`/task/Tasks/00000000-0000-0000-0000-0000000000AB`;
     expect(data).to.deep.include({
-      ID: "00000000-0000-0000-0000-00000000000H",
+      ID: "00000000-0000-0000-0000-0000000000AB",
       status: { code: "O" },
     });
   });
