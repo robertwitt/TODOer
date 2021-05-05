@@ -10,7 +10,8 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^5",
-    "express": "^4"
+    "express": "^4",
+    "@sap/hana-client": "^2.6.61"
   },
   "devDependencies": {
     "chai": "^4.3.4",
