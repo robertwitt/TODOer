@@ -1,5 +1,3 @@
-namespace srv;
-
 using {db} from '../db';
 
 

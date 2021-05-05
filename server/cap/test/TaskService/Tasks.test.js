@@ -180,9 +180,9 @@ describe("Tasks", () => {
     expect(status).to.equal(400);
   });
 
-  it.skip("can be set to done", async () => {
+  it("can be set to done", async () => {
     const { status } = await POST(
-      "/task/Tasks/00000000-0000-0000-0000-00000000000F/setToDone()",
+      "/task/Tasks/00000000-0000-0000-0000-00000000000F/TaskService.setToDone",
       {}
     );
     expect(status).to.equal(204);
@@ -195,32 +195,32 @@ describe("Tasks", () => {
     });
   });
 
-  it.skip("can be cancelled", async () => {
+  it("can be cancelled", async () => {
     const { status } = await POST(
-      "/task/Tasks/00000000-0000-0000-0000-00000000000G/cancel()",
+      "/task/Tasks/00000000-0000-0000-0000-0000000000AA/TaskService.cancel",
       {}
     );
     expect(status).to.equal(204);
     const {
       data,
-    } = await GET`/task/Tasks/00000000-0000-0000-0000-00000000000G`;
+    } = await GET`/task/Tasks/00000000-0000-0000-0000-0000000000AA`;
     expect(data).to.deep.include({
-      ID: "00000000-0000-0000-0000-00000000000G",
+      ID: "00000000-0000-0000-0000-0000000000AA",
       status: { code: "X" },
     });
   });
 
-  it.skip("can be reopened", async () => {
+  it("can be reopened", async () => {
     const { status } = await POST(
-      "/task/Tasks/00000000-0000-0000-0000-00000000000H/reopen()",
+      "/task/Tasks/00000000-0000-0000-0000-0000000000AB/TaskService.reopen",
       {}
     );
     expect(status).to.equal(204);
     const {
       data,
-    } = await GET`/task/Tasks/00000000-0000-0000-0000-00000000000H`;
+    } = await GET`/task/Tasks/00000000-0000-0000-0000-0000000000AB`;
     expect(data).to.deep.include({
-      ID: "00000000-0000-0000-0000-00000000000H",
+      ID: "00000000-0000-0000-0000-0000000000AB",
       status: { code: "O" },
     });
   });

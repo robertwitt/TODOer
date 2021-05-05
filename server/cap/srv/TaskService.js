@@ -14,10 +14,15 @@ class TaskService extends cds.ApplicationService {
     this.before("CREATE", "Collections", this.setCollectionDefaults);
     this.before("DELETE", "Collections", this.forbidDeletingDefaultCollection);
     this.on(["CREATE", "UPDATE"], "Collections", this.changeDefaultCollection);
+
     this.before(["UPDATE", "DELETE"], "Tasks", this.validateTaskStatus);
     this.before("UPDATE", "Tasks", this.validateTaskDueDate);
     this.before(["CREATE", "UPDATE"], "Tasks", this.validateTaskDueTime);
     this.before("CREATE", "Tasks", this.setTaskDefaults);
+
+    this.on("setToDone", "Tasks", (req) => this.setTaskStatus("D", req));
+    this.on("cancel", "Tasks", (req) => this.setTaskStatus("X", req));
+    this.on("reopen", "Tasks", (req) => this.setTaskStatus("O", req));
     await super.init();
   }
 
@@ -122,6 +127,15 @@ class TaskService extends cds.ApplicationService {
     const data = req.data;
     data.status_code = "O";
     data.isPlannedForMyDay = data.isPlannedForMyDay || false;
+  }
+
+  async setTaskStatus(status, req) {
+    const tasks = await this.tx(req).run(req.query);
+    if (!tasks.length) {
+      req.reject(404);
+      return;
+    }
+    return cds.db.update("db.Tasks", tasks[0].ID).set({ status_code: status });
   }
 }
 
