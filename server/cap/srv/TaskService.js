@@ -1,5 +1,5 @@
 const cds = require("@sap/cds");
-const { ColorSpecification } = require("../specification/color");
+const { ColorSpecification } = require("./specification/color");
 
 /**
  * Implementation of the Task application service
