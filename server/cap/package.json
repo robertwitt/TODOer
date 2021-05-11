@@ -20,6 +20,9 @@
     "jest": "^26.6.3",
     "sqlite3": "^5.0.2"
   },
+  "engines": {
+    "node": "14.16.0"
+  },
   "scripts": {
     "start": "cds run",
     "test": "jest"
