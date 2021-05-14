@@ -13,24 +13,20 @@ describe("Task Collections", () => {
   });
 
   it("can be read", async () => {
-    const {
-      status,
-      data,
-    } = await GET`/task/Collections/00000000-0000-0000-0000-000000000001`;
+    const { status, data } =
+      await GET`/task/Collections/00000000-0000-0000-0000-000000000001`;
     expect(status).to.equal(200);
     expect(data).to.include({
       ID: "00000000-0000-0000-0000-000000000001",
       title: "My Tasks",
-      color: "0000FF",
+      color: null,
       isDefault: true,
     });
   });
 
   it("can be queried", async () => {
-    const {
-      status,
-      data,
-    } = await GET`/task/Collections?$select=title,color&$orderby=title&$filter=title ne 'Other'`;
+    const { status, data } =
+      await GET`/task/Collections?$select=title,color&$orderby=title&$filter=title ne 'Other'`;
     expect(status).to.equal(200);
     expect(data).to.deep.include({
       value: [
@@ -47,7 +43,7 @@ describe("Task Collections", () => {
         {
           ID: "00000000-0000-0000-0000-000000000001",
           title: "My Tasks",
-          color: "0000FF",
+          color: null,
         },
       ],
     });
@@ -76,7 +72,8 @@ describe("Task Collections", () => {
   });
 
   it("can be created with default flag", async () => {
-    let res = await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
+    let res =
+      await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
     expect(res.status).to.equal(200);
     expect(res.data.value.length).to.equal(1);
 
@@ -92,7 +89,8 @@ describe("Task Collections", () => {
       isDefault: true,
     });
 
-    res = await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
+    res =
+      await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
     expect(res.status).to.equal(200);
     expect(res.data.value.length).to.equal(1);
   });
@@ -125,7 +123,8 @@ describe("Task Collections", () => {
   });
 
   it("can be updated with default flag", async () => {
-    let res = await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
+    let res =
+      await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
     expect(res.status).to.equal(200);
     expect(res.data.value.length).to.equal(1);
 
@@ -141,23 +140,21 @@ describe("Task Collections", () => {
       isDefault: true,
     });
 
-    res = await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
+    res =
+      await GET`/task/Collections?$select=isDefault&$filter=isDefault eq true`;
     expect(res.status).to.equal(200);
     expect(res.data.value.length).to.equal(1);
   });
 
   it("can be deleted", async () => {
-    const {
-      status,
-    } = await DEL`/task/Collections/00000000-0000-0000-0000-000000000004`;
+    const { status } =
+      await DEL`/task/Collections/00000000-0000-0000-0000-000000000004`;
     expect(status).to.equal(204);
   });
 
   it("cannot be deleted with default flag", async () => {
-    const {
-      status,
-      data,
-    } = await GET`/task/Collections?$select=ID&$filter=isDefault eq true`;
+    const { status, data } =
+      await GET`/task/Collections?$select=ID&$filter=isDefault eq true`;
     expect(status).to.equal(200);
     expect(data.value.length).to.equal(1);
 
@@ -168,9 +165,8 @@ describe("Task Collections", () => {
   });
 
   it("cannot be deleted with tasks assigned", async () => {
-    const {
-      status,
-    } = await DEL`/task/Collections/00000000-0000-0000-0000-000000000002`;
+    const { status } =
+      await DEL`/task/Collections/00000000-0000-0000-0000-000000000002`;
     expect(status).to.equal(400);
   });
 });
