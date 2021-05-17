@@ -34,7 +34,7 @@ Object {
       "type": "TOMORROW",
     },
     Object {
-      "color": "0000FF",
+      "color": null,
       "id": 1,
       "isDefaultCollection": false,
       "isDeletable": true,
@@ -86,7 +86,7 @@ Object {
       "type": "TOMORROW",
     },
     Object {
-      "color": "0000FF",
+      "color": null,
       "id": 1,
       "isDefaultCollection": true,
       "isDeletable": true,
@@ -109,7 +109,7 @@ Object {
 
 exports[`The API server can read a single task list by ID 1`] = `
 Object {
-  "color": "0000FF",
+  "color": null,
   "id": 1,
   "isDefaultCollection": true,
   "isDeletable": true,
@@ -165,7 +165,7 @@ Object {
       "title": "Groceries shopping",
     },
   ],
-  "color": "0000FF",
+  "color": null,
   "id": 1,
   "title": "My Tasks",
   "type": "COLLECTION",

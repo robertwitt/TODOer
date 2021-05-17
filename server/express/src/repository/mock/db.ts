@@ -3,6 +3,11 @@ import TaskList, { TaskListId, TaskListType } from "../../model/taskList";
 import TaskPriority, { TaskPriorityCode } from "../../model/taskPriority";
 import TaskStatus, { TaskStatusCode } from "../../model/taskStatus";
 
+export type MockDbData = {
+  collections: TaskList[];
+  tasks: Task[];
+};
+
 export default class MockDb {
   private static singleton: MockDb;
 
@@ -42,36 +47,27 @@ export default class MockDb {
     return this._taskLists;
   }
 
-  reset(): void {
+  initializeWith(data: MockDbData): void {
     this.initialize();
+    data.collections.forEach((collection) =>
+      this.taskLists.set(collection.id, collection)
+    );
+    data.tasks.forEach((task) => this.tasks.set(task.id, task));
   }
 
   private initialize(): void {
-    const openStatus = new TaskStatus("O", "open");
-    const doneStatus = new TaskStatus("D", "done");
-    const cancelledStatus = new TaskStatus("X", "cancelled");
     this.taskStatuses.clear();
     this.taskStatuses
-      .set("O", openStatus)
-      .set("D", doneStatus)
-      .set("X", cancelledStatus);
+      .set("O", new TaskStatus("O", "open"))
+      .set("D", new TaskStatus("D", "done"))
+      .set("X", new TaskStatus("X", "cancelled"));
 
-    const highPriority = new TaskPriority(1, "high");
-    const mediumPriority = new TaskPriority(3, "medium");
-    const lowPriority = new TaskPriority(5, "low");
     this.taskPriorities.clear();
     this.taskPriorities
-      .set(1, highPriority)
-      .set(3, mediumPriority)
-      .set(5, lowPriority);
+      .set(1, new TaskPriority(1, "high"))
+      .set(3, new TaskPriority(3, "medium"))
+      .set(5, new TaskPriority(5, "low"));
 
-    const myTasks = new TaskList(1, {
-      title: "My Tasks",
-      color: "0000FF",
-      type: TaskListType.Collection,
-      isDefaultCollection: true,
-    });
-    const lifeList = new TaskList(42, { type: TaskListType.Collection });
     this.taskLists.clear();
     this.taskLists
       .set(2, new TaskList(2, { title: "My Day", type: TaskListType.MyDay }))
@@ -79,38 +75,15 @@ export default class MockDb {
         3,
         new TaskList(3, { title: "Tomorrow", type: TaskListType.Tomorrow })
       )
-      .set(1, myTasks)
-      .set(42, lifeList);
-
-    this.tasks.clear();
-    this.tasks
       .set(
         1,
-        new Task(1, {
-          title: "Tax declaration",
-          collection: myTasks.ref,
-          dueDate: "2021-05-31",
-          status: openStatus,
-          priority: lowPriority,
-        })
-      )
-      .set(
-        2,
-        new Task(2, {
-          title: "Groceries shopping",
-          collection: myTasks.ref,
-          status: openStatus,
-          priority: lowPriority,
-          isPlannedForMyDay: true,
-        })
-      )
-      .set(
-        42,
-        new Task(42, {
-          title: "What is the meaning of life?",
-          collection: lifeList.ref,
-          status: doneStatus,
+        new TaskList(1, {
+          title: "My Tasks",
+          type: TaskListType.Collection,
+          isDefaultCollection: true,
         })
       );
+
+    this.tasks.clear();
   }
 }

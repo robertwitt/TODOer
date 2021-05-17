@@ -1,11 +1,12 @@
 import app from "../../src/app";
 import supertest from "supertest";
 import MockDb from "../../src/repository/mock/db";
+import { testData } from "./testData";
 
 describe("The API server", () => {
   const request = supertest(app);
 
-  beforeEach(() => MockDb.instance.reset());
+  beforeEach(() => MockDb.instance.initializeWith(testData));
 
   it("can read a single task by ID", async () => {
     const { body } = await request.get("/beta/Tasks/1").expect(200);
@@ -54,7 +55,10 @@ describe("The API server", () => {
   });
 
   it("fails creating a task for a task list view", async () => {
-    await request.post("/beta/Tasks").send({ title: "new task", collection: 2 }).expect(400);
+    await request
+      .post("/beta/Tasks")
+      .send({ title: "new task", collection: 2 })
+      .expect(400);
   });
 
   it("can update a task", async () => {
