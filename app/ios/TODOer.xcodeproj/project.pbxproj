@@ -103,12 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				96DD8CBF2653D376005AC00A /* AppDelegate.swift */,
-				96DD8CC12653D376005AC00A /* SceneDelegate.swift */,
-				96DD8CC32653D376005AC00A /* ViewController.swift */,
-				96DD8CC52653D376005AC00A /* Main.storyboard */,
-				96DD8CC82653D378005AC00A /* Assets.xcassets */,
-				96DD8CCA2653D378005AC00A /* LaunchScreen.storyboard */,
-				96DD8CCD2653D378005AC00A /* Info.plist */,
+				96DD8CF32653D65C005AC00A /* Scenes */,
+				96DD8CF22653D646005AC00A /* Resources */,
+				96DD8CF12653D5FC005AC00A /* Views */,
 			);
 			path = TODOer;
 			sourceTree = "<group>";
@@ -129,6 +126,33 @@
 				96DD8CE32653D378005AC00A /* Info.plist */,
 			);
 			path = TODOerUITests;
+			sourceTree = "<group>";
+		};
+		96DD8CF12653D5FC005AC00A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				96DD8CC52653D376005AC00A /* Main.storyboard */,
+				96DD8CCA2653D378005AC00A /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		96DD8CF22653D646005AC00A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				96DD8CC82653D378005AC00A /* Assets.xcassets */,
+				96DD8CCD2653D378005AC00A /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		96DD8CF32653D65C005AC00A /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				96DD8CC12653D376005AC00A /* SceneDelegate.swift */,
+				96DD8CC32653D376005AC00A /* ViewController.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -442,7 +466,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 34MXHV49DX;
-				INFOPLIST_FILE = TODOer/Info.plist;
+				INFOPLIST_FILE = TODOer/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -461,7 +485,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 34MXHV49DX;
-				INFOPLIST_FILE = TODOer/Info.plist;
+				INFOPLIST_FILE = TODOer/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
