@@ -37,4 +37,10 @@ export interface TaskListRepository {
    * @return saved TaskList entity
    */
   save(taskList: TaskList): Promise<TaskList>;
+
+  /**
+   * Delete a given task list
+   * @param id a task list's ID
+   */
+  deleteById(id: TaskListId): Promise<void>;
 }
