@@ -4,12 +4,14 @@ import Task, {
   TaskId,
   TaskIsPlannedForMyDay,
 } from "../../model/task";
+import { TaskListId } from "../../model/taskList";
 import { TaskRepository } from "../task";
 import { AbstractMockRepository } from "./abstract";
 
 export default class TaskMockRepository
   extends AbstractMockRepository
-  implements TaskRepository {
+  implements TaskRepository
+{
   existsById(id: TaskId): Promise<boolean> {
     return Promise.resolve(this.db.tasks.has(id));
   }
@@ -42,12 +44,17 @@ export default class TaskMockRepository
     return task1.id - task2.id;
   }
 
-  findAllByCollection(collection: number): Promise<Task[]> {
+  findAllByCollection(collection: TaskListId): Promise<Task[]> {
     const tasks = Array.from(this.db.tasks.values())
       .filter((task) => task.collection.id === collection)
       .sort(this.sortTasks)
       .map((task) => this.copyTask(task));
     return Promise.resolve(tasks);
+  }
+
+  async countByCollection(collection: TaskListId): Promise<number> {
+    const tasks = await this.findAllByCollection(collection);
+    return Promise.resolve(tasks.length);
   }
 
   findAllByDueDate(

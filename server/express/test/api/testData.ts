@@ -4,6 +4,7 @@ import TaskPriority from "../../src/model/taskPriority";
 import TaskStatus from "../../src/model/taskStatus";
 import { MockDbData } from "../../src/repository/mock/db";
 
+const emptyList = new TaskList(41, { type: TaskListType.Collection });
 const lifeList = new TaskList(42, { type: TaskListType.Collection });
 const myTasksRef: TaskListRef = {
   id: 1,
@@ -13,7 +14,7 @@ const openStatus = new TaskStatus("O", "open");
 const lowPriority = new TaskPriority(5, "low");
 
 export const testData: MockDbData = {
-  collections: [lifeList],
+  collections: [emptyList, lifeList],
   tasks: [
     new Task(1, {
       title: "Tax declaration",

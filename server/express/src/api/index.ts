@@ -10,6 +10,7 @@ export {
 } from "./task";
 export {
   createTaskList,
+  deleteTaskList,
   getTaskList,
   getTaskLists,
   getTaskListWithTasks,

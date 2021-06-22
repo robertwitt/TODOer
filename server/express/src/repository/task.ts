@@ -38,6 +38,13 @@ export interface TaskRepository {
   findAllByCollection(collection: TaskListId): Promise<Task[]>;
 
   /**
+   * Count the tasks assigned to a specific collection
+   * @param collection ID of a TaskList
+   * @returns number of Task entities
+   */
+  countByCollection(collection: TaskListId): Promise<number>;
+
+  /**
    * Get all tasks with a specific due date
    * @param dueDate due date
    * @param isPlannedForMyDay optional flag
