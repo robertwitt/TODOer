@@ -270,6 +270,26 @@ paths:
             type: integer
             format: int64
       responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskListWithTasks"
+        "404":
+          description: Not Found
+  /TaskLists/{id}/makeDefault:
+    post:
+      operationId: makeTaskListTheDefault
+      summary: Make a task list the new default
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
         "204":
           description: No Content
         "404":
