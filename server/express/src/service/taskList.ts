@@ -200,6 +200,13 @@ export default class TaskListService {
     if (!taskList.isDeletable) {
       throw ApiError.badRequest(`Task list ${taskList.id} cannot be deleted`);
     }
+    if (
+      (await repositoryFactory.getTaskRepository().countByCollection(id)) > 0
+    ) {
+      throw ApiError.badRequest(
+        `Task list ${taskList.id} cannot be deleted as long as it has tasks assigned`
+      );
+    }
     await repository.deleteById(id);
   }
 }
