@@ -95,3 +95,34 @@ export async function createTaskList(
     next(err);
   }
 }
+
+/**
+ * Handler of PATCH /TaskLists/{id}
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function updateTaskList(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const taskListId = Number(req.params.id);
+  if (!taskListId) {
+    next(ApiError.badRequest("Task ID is required"));
+    return;
+  }
+  const body = req.body;
+
+  try {
+    const service = new TaskListService();
+    const task = await service.updateTaskList(taskListId, {
+      title: body.title,
+      color: body.color,
+    });
+    res.json(task);
+    next();
+  } catch (err) {
+    next(err);
+  }
+}

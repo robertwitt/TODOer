@@ -13,5 +13,6 @@ export {
   getTaskList,
   getTaskLists,
   getTaskListWithTasks,
+  updateTaskList,
 } from "./taskList";
 export { ping } from "./ping";
