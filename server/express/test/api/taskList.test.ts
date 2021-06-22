@@ -59,7 +59,22 @@ describe("The API server", () => {
     expect(body).toMatchSnapshot();
   });
 
-  it("cannot create a task list with invalid", async () => {
+  it("cannot create a task list with invalid color", async () => {
     await request.post("/beta/TaskLists").send({ color: "WDR392" }).expect(400);
+  });
+
+  it("can update a task list's color", async () => {
+    const { body } = await request
+      .patch("/beta/TaskLists/1")
+      .send({ color: "DDEEFF" })
+      .expect(200);
+    expect(body).toMatchSnapshot();
+  });
+
+  it("cannpt update a task list with invalid color", async () => {
+    await request
+      .patch("/beta/TaskLists/1")
+      .send({ color: "EEFFGG" })
+      .expect(400);
   });
 });

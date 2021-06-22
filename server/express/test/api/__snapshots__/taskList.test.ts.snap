@@ -203,3 +203,15 @@ Object {
   "type": "MY_DAY",
 }
 `;
+
+exports[`The API server can update a task list's color 1`] = `
+Object {
+  "color": "DDEEFF",
+  "id": 1,
+  "isDefaultCollection": true,
+  "isDeletable": true,
+  "isUpdatable": true,
+  "title": "My Tasks",
+  "type": "COLLECTION",
+}
+`;
