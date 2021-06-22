@@ -19,6 +19,12 @@ export interface TaskListRepository {
   getOne(id: TaskListId): Promise<TaskList>;
 
   /**
+   * Get the default task list
+   * @returns the TaskList entity with default flag
+   */
+  getDefault(): Promise<TaskList>;
+
+  /**
    * Get a list of task lists
    * @returns array of TaskList entities
    */

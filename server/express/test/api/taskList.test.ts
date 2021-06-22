@@ -87,4 +87,18 @@ describe("The API server", () => {
     await request.delete("/beta/TaskLists/42").expect(400);
     await request.get("/beta/TaskLists/42").expect(200);
   });
+
+  it("can make an existing list the new default collection", async () => {
+    await request.post("/beta/TaskLists/42/makeDefault").expect(204);
+    const { body } = await request.get("/beta/TaskLists/42").expect(200);
+    expect(body.isDefaultCollection).toBeTruthy();
+    const { body: getBody } = await request
+      .get("/beta/TaskLists/1")
+      .expect(200);
+    expect(getBody.isDefaultCollection).toBeFalsy();
+  });
+
+  it("cannot make a task view the default collection", async () => {
+    await request.post("/beta/TaskLists/2/makeDefault").expect(400);
+  });
 });

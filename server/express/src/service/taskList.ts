@@ -189,7 +189,7 @@ export default class TaskListService {
 
   /**
    * Delete a task list with a given ID
-   * @param id a task's ID
+   * @param id a task list's ID
    */
   async deleteTaskList(id: TaskListId): Promise<void> {
     const repository = repositoryFactory.getTaskListRepository();
@@ -208,5 +208,33 @@ export default class TaskListService {
       );
     }
     await repository.deleteById(id);
+  }
+
+  /**
+   * Make a task list the new default.
+   * @param id a task list's ID
+   */
+  async makeTaskListTheDefault(id: TaskListId): Promise<void> {
+    const repository = repositoryFactory.getTaskListRepository();
+
+    const newDefaultList = await repository.findById(id);
+    if (!newDefaultList) {
+      throw ApiError.notFound(`A task list with ID ${id} does not exist`);
+    }
+    if (newDefaultList.isDefaultCollection) {
+      return;
+    }
+    if (!newDefaultList.isUpdatable) {
+      throw ApiError.badRequest(`Task list ${id} cannot be updated`);
+    }
+    newDefaultList.isDefaultCollection = true;
+
+    const oldDefaultList = await repository.getDefault();
+    oldDefaultList.isDefaultCollection = false;
+
+    await Promise.all([
+      repository.save(newDefaultList),
+      repository.save(oldDefaultList),
+    ]);
   }
 }

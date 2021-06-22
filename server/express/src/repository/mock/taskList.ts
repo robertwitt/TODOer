@@ -32,6 +32,17 @@ export default class TaskListMockRepository
     return list;
   }
 
+  async getDefault(): Promise<TaskList> {
+    const defaultList = Array.from(this.db.taskLists.values()).find(
+      (list) =>
+        list.type === TaskListType.Collection && list.isDefaultCollection
+    );
+    if (!defaultList) {
+      throw new Error("There is no default task list in the database");
+    }
+    return this.copyTaskList(defaultList);
+  }
+
   findAll(): Promise<TaskList[]> {
     const lists = Array.from(this.db.taskLists.values())
       .sort(this.sortTaskLists)
