@@ -53,6 +53,15 @@ Object {
     },
     Object {
       "color": null,
+      "id": 41,
+      "isDefaultCollection": false,
+      "isDeletable": true,
+      "isUpdatable": true,
+      "title": null,
+      "type": "COLLECTION",
+    },
+    Object {
+      "color": null,
       "id": 42,
       "isDefaultCollection": false,
       "isDeletable": true,
@@ -92,6 +101,15 @@ Object {
       "isDeletable": true,
       "isUpdatable": true,
       "title": "My Tasks",
+      "type": "COLLECTION",
+    },
+    Object {
+      "color": null,
+      "id": 41,
+      "isDefaultCollection": false,
+      "isDeletable": true,
+      "isUpdatable": true,
+      "title": null,
       "type": "COLLECTION",
     },
     Object {
