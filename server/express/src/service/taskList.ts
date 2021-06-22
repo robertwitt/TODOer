@@ -37,6 +37,11 @@ export type TaskListCreatePayload = {
   isDefaultCollection?: TaskListIsDefaultCollection;
 };
 
+export type TaskListUpdatePayload = {
+  title?: TaskListTitle | null;
+  color?: TaskListColor | null;
+};
+
 /**
  * Implementation of a service for TaskList entities
  */
@@ -122,6 +127,11 @@ export default class TaskListService {
     );
   }
 
+  /**
+   * Create a new task list with given data
+   * @param payload data to create the task list with
+   * @returns created task list
+   */
   async createTaskList(
     payload: TaskListCreatePayload
   ): Promise<TaskListPayload> {
@@ -135,6 +145,40 @@ export default class TaskListService {
         isDefaultCollection: payload.isDefaultCollection,
       };
       taskList = repository.create(data);
+    } catch (error) {
+      throw ApiError.badRequest(error);
+    }
+
+    taskList = await repository.save(taskList);
+    return TaskListService.createTaskListPayload(taskList);
+  }
+
+  /**
+   * Update a given task list with given data
+   * @param id a task list's ID
+   * @param payload data to update the task list with
+   * @returns updated task list
+   */
+  async updateTaskList(
+    id: TaskListId,
+    payload: TaskListUpdatePayload
+  ): Promise<TaskListPayload> {
+    const repository = repositoryFactory.getTaskListRepository();
+    let taskList = await repository.findById(id);
+    if (!taskList) {
+      throw ApiError.notFound(`A task list with ID ${id} does not exist`);
+    }
+    if (!taskList.isUpdatable) {
+      throw ApiError.badRequest(`Task list ${id} cannot be updated`);
+    }
+
+    try {
+      if (payload.title !== undefined) {
+        taskList.title = payload.title ?? undefined;
+      }
+      if (payload.color !== undefined) {
+        taskList.color = payload.color ?? undefined;
+      }
     } catch (error) {
       throw ApiError.badRequest(error);
     }
