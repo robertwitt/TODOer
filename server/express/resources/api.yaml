@@ -239,10 +239,9 @@ paths:
                 $ref: "#/components/schemas/TaskList-update"
         "404":
           description: Not Found
-  /TaskLists/{id}/assignedTasks:
-    get:
-      operationId: getTaskListWithTasks
-      summary: Get a task list with all assigned tasks
+    delete:
+      operationId: deleteTaskList
+      summary: Delete a task list
       parameters:
         - name: id
           in: path
@@ -256,7 +255,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TaskListWithTasks"
+                $ref: "#/components/schemas/TaskList"
+        "404":
+          description: Not Found
+  /TaskLists/{id}/assignedTasks:
+    get:
+      operationId: getTaskListWithTasks
+      summary: Get a task list with all assigned tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: No Content
         "404":
           description: Not Found
 
