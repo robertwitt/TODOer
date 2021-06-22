@@ -8,7 +8,8 @@ import { AbstractMockRepository } from "./abstract";
 
 export default class TaskListMockRepository
   extends AbstractMockRepository
-  implements TaskListRepository {
+  implements TaskListRepository
+{
   findById(id: TaskListId): Promise<TaskList | undefined> {
     const list = this.db.taskLists.get(id);
     return Promise.resolve(list ? this.copyTaskList(list) : undefined);
@@ -82,5 +83,10 @@ export default class TaskListMockRepository
       (id1, id2) => id2 - id1
     );
     return allIds.length === 0 ? 1 : allIds[0] + 1;
+  }
+
+  deleteById(id: TaskListId): Promise<void> {
+    this.db.taskLists.delete(id);
+    return Promise.resolve();
   }
 }

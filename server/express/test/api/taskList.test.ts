@@ -77,4 +77,14 @@ describe("The API server", () => {
       .send({ color: "EEFFGG" })
       .expect(400);
   });
+
+  it("can delete empty task list", async () => {
+    await request.delete("/beta/TaskLists/41").expect(204);
+    await request.get("/beta/TaskLists/41").expect(404);
+  });
+
+  it("cannot delete task list with tasks", async () => {
+    await request.delete("/beta/TaskLists/42").expect(400);
+    await request.get("/beta/TaskLists/42").expect(200);
+  });
 });
