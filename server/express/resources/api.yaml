@@ -220,6 +220,25 @@ paths:
                 $ref: "#/components/schemas/TaskList"
         "404":
           description: Not Found
+    patch:
+      operationId: updateTaskList
+      summary: Update a task list
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList-update"
+        "404":
+          description: Not Found
   /TaskLists/{id}/assignedTasks:
     get:
       operationId: getTaskListWithTasks
@@ -486,3 +505,13 @@ components:
           maxLength: 6
         isDefaultCollection:
           type: boolean
+    TaskList-update:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
