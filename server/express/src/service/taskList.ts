@@ -186,4 +186,20 @@ export default class TaskListService {
     taskList = await repository.save(taskList);
     return TaskListService.createTaskListPayload(taskList);
   }
+
+  /**
+   * Delete a task list with a given ID
+   * @param id a task's ID
+   */
+  async deleteTaskList(id: TaskListId): Promise<void> {
+    const repository = repositoryFactory.getTaskListRepository();
+    const taskList = await repository.findById(id);
+    if (!taskList) {
+      throw ApiError.notFound(`A task list with ${id} does not exists`);
+    }
+    if (!taskList.isDeletable) {
+      throw ApiError.badRequest(`Task list ${taskList.id} cannot be deleted`);
+    }
+    await repository.deleteById(id);
+  }
 }
