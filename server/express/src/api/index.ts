@@ -14,6 +14,7 @@ export {
   getTaskList,
   getTaskLists,
   getTaskListWithTasks,
+  makeTaskListTheDefault,
   updateTaskList,
 } from "./taskList";
 export { ping } from "./ping";

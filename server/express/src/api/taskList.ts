@@ -153,3 +153,30 @@ export async function deleteTaskList(
     next(err);
   }
 }
+
+/**
+ * Handler of POST /TaskLists/{id}/makeDefault
+ * @param req the request
+ * @param res the response
+ * @param next pointer to next handler
+ */
+export async function makeTaskListTheDefault(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const taskListId = Number(req.params.id);
+  if (!taskListId) {
+    next(ApiError.badRequest("Task ID is required"));
+    return;
+  }
+
+  try {
+    const service = new TaskListService();
+    await service.makeTaskListTheDefault(taskListId);
+    res.status(204).send();
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
