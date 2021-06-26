@@ -11,6 +11,7 @@
 		966798302687AF4100A5862A /* TaskListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667982F2687AF4100A5862A /* TaskListBuilder.swift */; };
 		966798332687B1C000A5862A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966798322687B1C000A5862A /* UIColor.swift */; };
 		966798362687B2EE00A5862A /* UIColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966798352687B2EE00A5862A /* UIColorTests.swift */; };
+		966798392687B93900A5862A /* TaskListBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966798382687B93900A5862A /* TaskListBuilderTests.swift */; };
 		96DD8CC02653D376005AC00A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD8CBF2653D376005AC00A /* AppDelegate.swift */; };
 		96DD8CC22653D376005AC00A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD8CC12653D376005AC00A /* SceneDelegate.swift */; };
 		96DD8CC42653D376005AC00A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD8CC32653D376005AC00A /* ViewController.swift */; };
@@ -51,6 +52,7 @@
 		9667982F2687AF4100A5862A /* TaskListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListBuilder.swift; sourceTree = "<group>"; };
 		966798322687B1C000A5862A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		966798352687B2EE00A5862A /* UIColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorTests.swift; sourceTree = "<group>"; };
+		966798382687B93900A5862A /* TaskListBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListBuilderTests.swift; sourceTree = "<group>"; };
 		96DD8CBC2653D376005AC00A /* TODOer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TODOer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96DD8CBF2653D376005AC00A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96DD8CC12653D376005AC00A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		966798372687B91B00A5862A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				966798382687B93900A5862A /* TaskListBuilderTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		96DD8CB32653D376005AC00A = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				966798342687B2DC00A5862A /* Extensions */,
+				966798372687B91B00A5862A /* Models */,
 				96DD8CD62653D378005AC00A /* TODOerTests.swift */,
 				96DD8CD82653D378005AC00A /* Info.plist */,
 			);
@@ -474,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96DD8CD72653D378005AC00A /* TODOerTests.swift in Sources */,
+				966798392687B93900A5862A /* TaskListBuilderTests.swift in Sources */,
 				966798362687B2EE00A5862A /* UIColorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
