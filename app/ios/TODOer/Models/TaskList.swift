@@ -18,15 +18,19 @@ class TaskList: Identifiable, Equatable {
     let id: Int
     let title: String?
     let color: UIColor?
-    let listType: TaskListType
+    let type: TaskListType
     let isDefaultCollection: Bool
+    let isEditable: Bool
+    let isDeletable: Bool
     
-    init(id: ID, title: String?, color: UIColor?, listType: TaskListType, isDefaultCollection: Bool) {
+    init(id: ID, title: String?, color: UIColor?, type: TaskListType, isDefaultCollection: Bool, isEditable: Bool, isDeletable: Bool) {
         self.id = id
         self.title = title
         self.color = color
-        self.listType = listType
+        self.type = type
         self.isDefaultCollection = isDefaultCollection
+        self.isEditable = isEditable
+        self.isDeletable = isDeletable
     }
     
     static func == (lhs: TaskList, rhs: TaskList) -> Bool {

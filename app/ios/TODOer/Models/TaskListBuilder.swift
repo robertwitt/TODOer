@@ -4,26 +4,23 @@ import UIKit
  This class creates `TaskList` objects. It is implemented according to the Builder pattern.
  */
 class TaskListBuilder {
-    private(set) var id: TaskList.ID?
+    private(set) var id = -1
     private(set) var title: String?
     private(set) var color: UIColor?
-    private(set) var listType: TaskListType?
-    // swiftlint:disable discouraged_optional_boolean
-    private(set) var isDefaultCollection: Bool?
-    // swiftlint:enable discouraged_optional_boolean
+    private(set) var type: TaskListType = .collection
+    private(set) var isDefaultCollection = false
+    private(set) var isEditable = true
+    private(set) var isDeletable = true
     
     convenience init(template: TaskList) {
         self.init()
         self.id = template.id
         self.title = template.title
         self.color = template.color
-        self.listType = template.listType
+        self.type = template.type
         self.isDefaultCollection = template.isDefaultCollection
-    }
-    
-    func id(_ id: TaskList.ID?) -> TaskListBuilder {
-        self.id = id
-        return self
+        self.isEditable = template.isEditable
+        self.isDeletable = template.isDeletable
     }
     
     func title(_ title: String?) -> TaskListBuilder {
@@ -43,23 +40,18 @@ class TaskListBuilder {
         return self
     }
     
-    func listType(_ listType: TaskListType?) -> TaskListBuilder {
-        self.listType = listType
-        return self
-    }
-    
-    // swiftlint:disable discouraged_optional_boolean
-    func isDefaultCollection(_ isDefaultCollection: Bool?) -> TaskListBuilder {
+    func isDefaultCollection(_ isDefaultCollection: Bool) -> TaskListBuilder {
         self.isDefaultCollection = isDefaultCollection
         return self
     }
-    // swiftlint:enable discouraged_optional_boolean
     
     func build() -> TaskList {
-        return TaskList(id: id ?? -1,
+        return TaskList(id: id,
                         title: title,
                         color: color,
-                        listType: listType ?? .collection,
-                        isDefaultCollection: isDefaultCollection ?? false)
+                        type: type,
+                        isDefaultCollection: isDefaultCollection,
+                        isEditable: isEditable,
+                        isDeletable: isDeletable)
     }
 }
