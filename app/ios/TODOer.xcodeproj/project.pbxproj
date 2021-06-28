@@ -129,11 +129,9 @@
 		9667982C2687AC6B00A5862A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9667983A2688F79400A5862A /* CodeList.swift */,
-				9667982D2687AC9300A5862A /* TaskList.swift */,
-				9667982F2687AF4100A5862A /* TaskListBuilder.swift */,
-				9667983C2688F85900A5862A /* TaskPriority.swift */,
-				9667983E268A41EA00A5862A /* TaskStatus.swift */,
+				96679840268A424C00A5862A /* Common */,
+				96679841268A425500A5862A /* TaskList */,
+				96679842268A426000A5862A /* Task */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,6 +158,32 @@
 				966798382687B93900A5862A /* TaskListBuilderTests.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		96679840268A424C00A5862A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9667983A2688F79400A5862A /* CodeList.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		96679841268A425500A5862A /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+				9667982D2687AC9300A5862A /* TaskList.swift */,
+				9667982F2687AF4100A5862A /* TaskListBuilder.swift */,
+			);
+			path = TaskList;
+			sourceTree = "<group>";
+		};
+		96679842268A426000A5862A /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				9667983C2688F85900A5862A /* TaskPriority.swift */,
+				9667983E268A41EA00A5862A /* TaskStatus.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 		96DD8CB32653D376005AC00A = {
