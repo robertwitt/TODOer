@@ -2,9 +2,13 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    // swiftlint:disable implicitly_unwrapped_optional
+    private var appModel: AppModel!
+    // swiftlint:enable implicitly_unwrapped_optional
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        appModel = MockAppModel()
         return true
     }
 
