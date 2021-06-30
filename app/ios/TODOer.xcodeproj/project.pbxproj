@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9667982E2687AC9300A5862A /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667982D2687AC9300A5862A /* TaskList.swift */; };
+		966798302687AF4100A5862A /* TaskListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667982F2687AF4100A5862A /* TaskListBuilder.swift */; };
+		966798332687B1C000A5862A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966798322687B1C000A5862A /* UIColor.swift */; };
+		966798362687B2EE00A5862A /* UIColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966798352687B2EE00A5862A /* UIColorTests.swift */; };
+		966798392687B93900A5862A /* TaskListBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966798382687B93900A5862A /* TaskListBuilderTests.swift */; };
+		9667983B2688F79400A5862A /* CodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667983A2688F79400A5862A /* CodeList.swift */; };
+		9667983D2688F85900A5862A /* TaskPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667983C2688F85900A5862A /* TaskPriority.swift */; };
+		9667983F268A41EA00A5862A /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667983E268A41EA00A5862A /* TaskStatus.swift */; };
 		96DD8CC02653D376005AC00A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD8CBF2653D376005AC00A /* AppDelegate.swift */; };
 		96DD8CC22653D376005AC00A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD8CC12653D376005AC00A /* SceneDelegate.swift */; };
 		96DD8CC42653D376005AC00A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DD8CC32653D376005AC00A /* ViewController.swift */; };
@@ -43,6 +51,14 @@
 /* Begin PBXFileReference section */
 		19F12506F8C71A48B2836F47 /* Pods-TODOer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TODOer.release.xcconfig"; path = "Target Support Files/Pods-TODOer/Pods-TODOer.release.xcconfig"; sourceTree = "<group>"; };
 		76E1DB33E585C4D3497469DF /* Pods-TODOerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TODOerTests.release.xcconfig"; path = "Target Support Files/Pods-TODOerTests/Pods-TODOerTests.release.xcconfig"; sourceTree = "<group>"; };
+		9667982D2687AC9300A5862A /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
+		9667982F2687AF4100A5862A /* TaskListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListBuilder.swift; sourceTree = "<group>"; };
+		966798322687B1C000A5862A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		966798352687B2EE00A5862A /* UIColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorTests.swift; sourceTree = "<group>"; };
+		966798382687B93900A5862A /* TaskListBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListBuilderTests.swift; sourceTree = "<group>"; };
+		9667983A2688F79400A5862A /* CodeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeList.swift; sourceTree = "<group>"; };
+		9667983C2688F85900A5862A /* TaskPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPriority.swift; sourceTree = "<group>"; };
+		9667983E268A41EA00A5862A /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
 		96DD8CBC2653D376005AC00A /* TODOer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TODOer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96DD8CBF2653D376005AC00A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96DD8CC12653D376005AC00A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,7 +74,7 @@
 		96DD8CE12653D378005AC00A /* TODOerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODOerUITests.swift; sourceTree = "<group>"; };
 		96DD8CE32653D378005AC00A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96DD8CEF2653D48C005AC00A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		96DD8CF62653D8D7005AC00A /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		96DD8CF62653D8D7005AC00A /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		96DD8CFB2653DC03005AC00A /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		988D327E73A9221500537311 /* Pods_TODOer_TODOerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TODOer_TODOerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB99BDD48B2EC3643E4D62FD /* Pods_TODOerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TODOerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +126,66 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9667982C2687AC6B00A5862A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				96679840268A424C00A5862A /* Common */,
+				96679841268A425500A5862A /* TaskList */,
+				96679842268A426000A5862A /* Task */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		966798312687B1A100A5862A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				966798322687B1C000A5862A /* UIColor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		966798342687B2DC00A5862A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				966798352687B2EE00A5862A /* UIColorTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		966798372687B91B00A5862A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				966798382687B93900A5862A /* TaskListBuilderTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		96679840268A424C00A5862A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9667983A2688F79400A5862A /* CodeList.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		96679841268A425500A5862A /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+				9667982D2687AC9300A5862A /* TaskList.swift */,
+				9667982F2687AF4100A5862A /* TaskListBuilder.swift */,
+			);
+			path = TaskList;
+			sourceTree = "<group>";
+		};
+		96679842268A426000A5862A /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				9667983C2688F85900A5862A /* TaskPriority.swift */,
+				9667983E268A41EA00A5862A /* TaskStatus.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
 		96DD8CB32653D376005AC00A = {
 			isa = PBXGroup;
 			children = (
@@ -139,8 +215,10 @@
 			isa = PBXGroup;
 			children = (
 				96DD8CBF2653D376005AC00A /* AppDelegate.swift */,
-				96DD8CF32653D65C005AC00A /* Scenes */,
+				966798312687B1A100A5862A /* Extensions */,
+				9667982C2687AC6B00A5862A /* Models */,
 				96DD8CF22653D646005AC00A /* Resources */,
+				96DD8CF32653D65C005AC00A /* Scenes */,
 				96DD8CF12653D5FC005AC00A /* Views */,
 			);
 			path = TODOer;
@@ -149,6 +227,8 @@
 		96DD8CD52653D378005AC00A /* TODOerTests */ = {
 			isa = PBXGroup;
 			children = (
+				966798342687B2DC00A5862A /* Extensions */,
+				966798372687B91B00A5862A /* Models */,
 				96DD8CD62653D378005AC00A /* TODOerTests.swift */,
 				96DD8CD82653D378005AC00A /* Info.plist */,
 			);
@@ -424,8 +504,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9667982E2687AC9300A5862A /* TaskList.swift in Sources */,
+				966798332687B1C000A5862A /* UIColor.swift in Sources */,
+				9667983D2688F85900A5862A /* TaskPriority.swift in Sources */,
 				96DD8CC42653D376005AC00A /* ViewController.swift in Sources */,
 				96DD8CC02653D376005AC00A /* AppDelegate.swift in Sources */,
+				966798302687AF4100A5862A /* TaskListBuilder.swift in Sources */,
+				9667983F268A41EA00A5862A /* TaskStatus.swift in Sources */,
+				9667983B2688F79400A5862A /* CodeList.swift in Sources */,
 				96DD8CC22653D376005AC00A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,6 +521,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				96DD8CD72653D378005AC00A /* TODOerTests.swift in Sources */,
+				966798392687B93900A5862A /* TaskListBuilderTests.swift in Sources */,
+				966798362687B2EE00A5862A /* UIColorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
