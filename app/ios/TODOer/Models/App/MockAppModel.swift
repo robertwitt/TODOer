@@ -20,7 +20,7 @@ class MockAppModel: AppModel {
         TaskList(id: 3,
                  title: "My Tasks",
                  color: UIColor.blue,
-                 type: .myDay,
+                 type: .collection,
                  isDefaultCollection: true,
                  isEditable: false,
                  isDeletable: false)
@@ -30,7 +30,7 @@ class MockAppModel: AppModel {
         completionHandler(Array(taskLists))
     }
     
-    func findTaskListById(id: TaskList.ID, completionHandler: (TaskList?) -> Void) {
+    func findTaskListByID(id: TaskList.ID, completionHandler: (TaskList?) -> Void) {
         let result = taskLists.first { taskList in
             return taskList.id == id
         }

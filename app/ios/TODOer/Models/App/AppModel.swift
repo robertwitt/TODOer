@@ -5,5 +5,5 @@ import Foundation
  */
 protocol AppModel {
     func findTaskLists(completionHandler: ([TaskList]) -> Void)
-    func findTaskListById(id: TaskList.ID, completionHandler: (TaskList?) -> Void)
+    func findTaskListByID(id: TaskList.ID, completionHandler: (TaskList?) -> Void)
 }
