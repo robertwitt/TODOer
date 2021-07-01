@@ -7,14 +7,29 @@ class TaskListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
+        loadTaskLists()
+    }
+    
+    private func setupTableView() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    @objc func handleRefreshControl() {
         loadTaskLists()
     }
     
     private func loadTaskLists() {
+        if tableView.refreshControl?.isRefreshing == false {
+            tableView.refreshControl?.beginRefreshing()
+        }
+        
         AppDelegate.shared.appModel.findTaskLists { taskLists in
             taskViews = taskLists.filter({ $0.type != .collection })
             taskCollections = taskLists.filter({ $0.type == .collection })
             tableView.reloadData()
+            tableView.refreshControl?.endRefreshing()
         }
     }
 
@@ -40,6 +55,8 @@ class TaskListTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskListCell", for: indexPath)
         cell.textLabel?.text = taskList?.title
+        cell.textLabel?.textColor = taskList?.color
+        cell.accessoryType = splitViewController?.isCollapsed == true ? .disclosureIndicator : .none
 
         return cell
     }
