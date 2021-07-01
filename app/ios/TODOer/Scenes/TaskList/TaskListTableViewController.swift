@@ -1,38 +1,59 @@
 import UIKit
 
 class TaskListTableViewController: UITableViewController {
+    
+    private var taskViews = [TaskList]()
+    private var taskCollections = [TaskList]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        loadTaskLists()
+    }
+    
+    private func loadTaskLists() {
+        AppDelegate.shared.appModel.findTaskLists { taskLists in
+            taskViews = taskLists.filter({ $0.type != .collection })
+            taskCollections = taskLists.filter({ $0.type == .collection })
+            tableView.reloadData()
+        }
     }
 
-    // MARK: - Table view data source
+    // MARK: Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return Section.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        switch Section(rawValue: section) {
+        case .view:
+            return taskViews.count
+        case .collection:
+            return taskCollections.count
+        default:
+            return 0
+        }
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let taskList = taskList(at: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskListCell", for: indexPath)
+        cell.textLabel?.text = taskList?.title
 
         return cell
     }
-    */
+    
+    private func taskList(at indexPath: IndexPath) -> TaskList? {
+        switch Section(rawValue: indexPath.section) {
+        case .view:
+            return taskViews[indexPath.row]
+        case .collection:
+            return taskCollections[indexPath.row]
+        default:
+            return nil
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -78,4 +99,10 @@ class TaskListTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
+
+private enum Section: Int {
+    case view = 0
+    case collection = 1
+    static let count = 2
 }
