@@ -15,6 +15,7 @@
 		9667983B2688F79400A5862A /* CodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667983A2688F79400A5862A /* CodeList.swift */; };
 		9667983D2688F85900A5862A /* TaskPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667983C2688F85900A5862A /* TaskPriority.swift */; };
 		9667983F268A41EA00A5862A /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9667983E268A41EA00A5862A /* TaskStatus.swift */; };
+		96C12241268DA4760005B104 /* TaskListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C12240268DA4760005B104 /* TaskListTableViewController.swift */; };
 		96C487BC268CEDF60027D24D /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C487BB268CEDF60027D24D /* AppModel.swift */; };
 		96C487BE268CEF940027D24D /* MockAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C487BD268CEF940027D24D /* MockAppModel.swift */; };
 		96C487C0268D9E0E0027D24D /* AppModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C487BF268D9E0E0027D24D /* AppModelTests.swift */; };
@@ -62,6 +63,7 @@
 		9667983A2688F79400A5862A /* CodeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeList.swift; sourceTree = "<group>"; };
 		9667983C2688F85900A5862A /* TaskPriority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPriority.swift; sourceTree = "<group>"; };
 		9667983E268A41EA00A5862A /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
+		96C12240268DA4760005B104 /* TaskListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListTableViewController.swift; sourceTree = "<group>"; };
 		96C487BB268CEDF60027D24D /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		96C487BD268CEF940027D24D /* MockAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppModel.swift; sourceTree = "<group>"; };
 		96C487BF268D9E0E0027D24D /* AppModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelTests.swift; sourceTree = "<group>"; };
@@ -194,6 +196,14 @@
 			path = Task;
 			sourceTree = "<group>";
 		};
+		96C1223D268DA41C0005B104 /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+				96C12240268DA4760005B104 /* TaskListTableViewController.swift */,
+			);
+			path = TaskList;
+			sourceTree = "<group>";
+		};
 		96C487BA268CED7E0027D24D /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				96DD8CC12653D376005AC00A /* SceneDelegate.swift */,
+				96C1223D268DA41C0005B104 /* TaskList */,
 				96DD8CC32653D376005AC00A /* ViewController.swift */,
 			);
 			path = Scenes;
@@ -527,6 +538,7 @@
 				96C487BC268CEDF60027D24D /* AppModel.swift in Sources */,
 				96DD8CC42653D376005AC00A /* ViewController.swift in Sources */,
 				96DD8CC02653D376005AC00A /* AppDelegate.swift in Sources */,
+				96C12241268DA4760005B104 /* TaskListTableViewController.swift in Sources */,
 				966798302687AF4100A5862A /* TaskListBuilder.swift in Sources */,
 				9667983F268A41EA00A5862A /* TaskStatus.swift in Sources */,
 				96C487BE268CEF940027D24D /* MockAppModel.swift in Sources */,
