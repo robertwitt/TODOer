@@ -3,8 +3,14 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    static var shared: AppDelegate {
+        // swiftlint:disable force_cast
+        return UIApplication.shared.delegate as! AppDelegate
+        // swiftlint:enable force_cast
+    }
+    
     // swiftlint:disable implicitly_unwrapped_optional
-    private var appModel: AppModel!
+    var appModel: AppModel!
     // swiftlint:enable implicitly_unwrapped_optional
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
