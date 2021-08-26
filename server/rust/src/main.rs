@@ -1,5 +1,4 @@
 #![cfg_attr(debug_assertions, allow(dead_code, unused_imports))]
-use reqwest;
 use rocket::{catch, catchers, get, launch, response::content::Html, routes};
 use std::str;
 
