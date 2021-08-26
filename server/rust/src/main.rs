@@ -3,6 +3,9 @@ use reqwest;
 use rocket::{catch, catchers, get, launch, response::content::Html, routes};
 use std::str;
 
+#[cfg(test)]
+mod tests;
+
 // We can return basic data types like numbers, strings, Option, Result
 // because Rocket contains ready-made implementation of the `Responder` trait
 // for them. For our own types, we could implement custom responders.
